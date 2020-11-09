@@ -4,7 +4,7 @@
 ## Version: 0.0.1
 ## Author: dadum
 
-## SavedVariables: LFGReportDB
+## SavedVariables: LFGReportConf
 
 embeds.xml
 
