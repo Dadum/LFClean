@@ -65,6 +65,11 @@ function LFClean:GenerateEntryButtons()
                     LFClean:GenerateReportTooltip(self:GetParent().resultID)
                 end)
                 self.buttons[i]:SetScript("OnLeave", GameTooltip_Hide)
+            end
+
+            -- Hide the button if currently queued for the group
+            if buttons[i].PendingLabel:IsShown() then
+                self.buttons[i]:Hide()
             else
                 self.buttons[i]:Show()
             end
@@ -123,9 +128,14 @@ end
 -- * --------------------------------------------------------------------------
 
 function LFClean:OnReceiveSearchResults()
-    LFClean:GenerateSelectedButton()
-    LFClean:GenerateEntryButtons()
+    self:GenerateSelectedButton()
+    self:GenerateEntryButtons()
 end
 
 LFClean:RegisterEvent("LFG_LIST_SEARCH_RESULTS_RECEIVED",
                       "OnReceiveSearchResults")
+
+function LFClean:OnApplicationStatusUpdate() self:GenerateEntryButtons() end
+
+LFClean:RegisterEvent("LFG_LIST_APPLICATION_STATUS_UPDATED",
+                      "OnApplicationStatusUpdate")
