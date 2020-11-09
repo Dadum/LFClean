@@ -22,7 +22,7 @@ function LFGReport:Report(id)
     local panel = _G.LFGListFrame.SearchPanel
     if id then
         local r = C_LFGList.GetSearchResultInfo(id)
-        LFGReport:Print("Reported group: " .. r.name)
+        self:Print("Reported group: " .. r.name)
 
         -- Report group as per blizz dropdown handler
         C_LFGList.ReportSearchResult(id, "lfglistspam");
@@ -30,7 +30,7 @@ function LFGReport:Report(id)
         LFGListSearchPanel_UpdateResultList(panel);
         LFGListSearchPanel_UpdateResults(panel);
     else
-        LFGReport:Print("No group selected")
+        self:Print("No group selected")
     end
 end
 
@@ -65,7 +65,6 @@ function LFGReport:GenerateEntryButtons()
                 end)
                 self.buttons[i]:SetScript("OnLeave", GameTooltip_Hide)
                 LFGReport.buttons[i].id = buttons[i].resultID
-                LFGReport.buttons[i].tooltipText = "test"
 
             else
                 self.buttons[i]:Show()
@@ -132,11 +131,3 @@ end
 
 LFGReport:RegisterEvent("LFG_LIST_SEARCH_RESULTS_RECEIVED",
                         "OnReceiveSearchResults")
-
--- * --------------------------------------------------------------------------
--- * Slash commands
--- * --------------------------------------------------------------------------
-
-LFGReport:RegisterChatCommand("lfgreport", "TestSlash")
-
-function LFGReport:TestSlash(input) LFGReport:Print("helo") end
