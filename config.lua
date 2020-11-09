@@ -9,11 +9,11 @@ local buttonOptions = {
     inline = true,
     args = {
         entry = {
-            name = "Entry Button",
-            desc = "Add one button for each entry of the group finder.\nNOTE: Might break the entry layout for long group names",
-            descStyle = "inline",
-            type = "toggle",
-            width = "full",
+            name = 'Entry Button',
+            desc = 'Add one button for each entry of the group finder.\nNOTE: Might break the entry layout for long group names',
+            descStyle = 'inline',
+            type = 'toggle',
+            width = 'full',
             set = function(info, val)
                 LFClean.conf.profile.entry = val
                 LFClean:GenerateEntryButtons()
@@ -21,11 +21,11 @@ local buttonOptions = {
             get = function(info) return LFClean.conf.profile.entry end
         },
         selected = {
-            name = "Selected Button",
-            desc = "Add a button to report the selected group entry",
-            descStyle = "inline",
-            type = "toggle",
-            width = "full",
+            name = 'Selected Button',
+            desc = 'Add a button to report the selected group entry',
+            descStyle = 'inline',
+            type = 'toggle',
+            width = 'full',
             set = function(info, val)
                 LFClean.conf.profile.selected = val
                 LFClean:GenerateSelectedButton()
