@@ -39,8 +39,7 @@ end
 
 function LFClean:GenerateReportTooltip(id)
     local details = C_LFGList.GetSearchResultInfo(id)
-    GameTooltip:AddLine("Report group: " .. id, nil, nil, nil, --[[wrapText]]
-                        true)
+    GameTooltip:AddLine("Hide group: " .. id, nil, nil, nil, --[[wrapText]] true)
     GameTooltip:AddLine(details.name, 1, 1, 1, --[[wrapText]] true)
     GameTooltip:Show()
 end
