@@ -8,7 +8,7 @@ GUI = LibStub("AceGUI-3.0")
 
 function LFGReport:OnInitialize()
     self.buttons = {}
-    self.selected = nil
+    self.selectedButton = nil
 
     LFGReport:InitConfig()
     LFGReport:InitDB()
@@ -51,15 +51,13 @@ function LFGReport:GenerateEntryButtons()
     if (self.conf.profile.entry) then
         for i = 1, #buttons do
             -- Only generate a button if it is missing
-            if LFGReport.buttons[i] == nil then
-                LFGReport.buttons[i] = CreateFrame("Button", "btn" .. i,
-                                                   buttons[i],
-                                                   "UIPanelSquareButton")
-                LFGReport.buttons[i]:SetPoint("RIGHT", buttons[i], "RIGHT", -1,
-                                              -1)
-                LFGReport.buttons[i]:SetSize(25, 25)
-                LFGReport.buttons[i]:SetAlpha(1)
-                LFGReport.buttons[i]:SetScript("OnClick", function(self)
+            if self.buttons[i] == nil then
+                self.buttons[i] = CreateFrame("Button", "btn" .. i, buttons[i],
+                                              "UIPanelSquareButton")
+                self.buttons[i]:SetPoint("RIGHT", buttons[i], "RIGHT", -1, -1)
+                self.buttons[i]:SetSize(25, 25)
+                self.buttons[i]:SetAlpha(1)
+                self.buttons[i]:SetScript("OnClick", function(self)
                     LFGReport:Report(self:GetParent().resultID)
                 end)
                 self.buttons[i]:SetScript("OnEnter", function(self)
@@ -67,8 +65,6 @@ function LFGReport:GenerateEntryButtons()
                     LFGReport:GenerateReportTooltip(self:GetParent().resultID)
                 end)
                 self.buttons[i]:SetScript("OnLeave", GameTooltip_Hide)
-                LFGReport.buttons[i].id = buttons[i].resultID
-
             else
                 self.buttons[i]:Show()
             end
@@ -91,15 +87,14 @@ end
 function LFGReport:GenerateSelectedButton()
     if (self.conf.profile.selected) then
         local panel = _G.LFGListFrame.SearchPanel
-        if (self.selected == nil) then
-            self.selected = CreateFrame("Button", "btn",
-                                        _G.LFGListFrame.SearchPanel,
-                                        "UIPanelSquareButton")
-            self.selected:SetPoint("RIGHT",
-                                   _G.LFGListFrame.SearchPanel.RefreshButton,
-                                   "LEFT", -5, 0)
-            self.selected:SetSize(25, 25)
-            self.selected:SetScript("OnClick", function()
+        if (self.selectedButton == nil) then
+            self.selectedButton = CreateFrame("Button", "btn",
+                                              _G.LFGListFrame.SearchPanel,
+                                              "UIPanelSquareButton")
+            self.selectedButton:SetPoint("RIGHT", _G.LFGListFrame.SearchPanel
+                                             .RefreshButton, "LEFT", -5, 0)
+            self.selectedButton:SetSize(25, 25)
+            self.selectedButton:SetScript("OnClick", function()
                 -- Report currently selected entry
                 local id = panel.selectedResult
                 LFGReport:Report(id)
@@ -107,7 +102,7 @@ function LFGReport:GenerateSelectedButton()
                 -- Remove selection
                 panel.selectedResult = nil
             end)
-            self.selected:SetScript("OnEnter", function(self)
+            self.selectedButton:SetScript("OnEnter", function(self)
                 GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
                 if (panel.selectedResult) then
                     LFGReport:GenerateReportTooltip(panel.selectedResult)
@@ -115,11 +110,11 @@ function LFGReport:GenerateSelectedButton()
                     GameTooltip:SetText("Select a group to report")
                 end
             end)
-            self.selected:SetScript("OnLeave", GameTooltip_Hide)
+            self.selectedButton:SetScript("OnLeave", GameTooltip_Hide)
         end
-        self.selected:Show()
+        self.selectedButton:Show()
     else
-        if (self.selected) then self.selected:Hide() end
+        if (self.selectedButton) then self.selectedButton:Hide() end
     end
 end
 
