@@ -24,12 +24,11 @@ function LFGReport:Report(id)
         local r = C_LFGList.GetSearchResultInfo(id)
         LFGReport:Print("Reported group: " .. r.name)
 
-        -- Report group
+        -- Report group as per blizz dropdown handler
         C_LFGList.ReportSearchResult(id, "lfglistspam");
         LFGListSearchPanel_AddFilteredID(panel, id);
         LFGListSearchPanel_UpdateResultList(panel);
         LFGListSearchPanel_UpdateResults(panel);
-
     else
         LFGReport:Print("No group selected")
     end
