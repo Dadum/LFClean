@@ -74,7 +74,10 @@ end
 -- * Events handling
 -- * --------------------------------------------------------------------------
 
-function LFGReport:OnReceiveSearchResults() LFGReport:GenerateButtons() end
+function LFGReport:OnReceiveSearchResults()
+    LFGReport:GenerateSelectedButton()
+    LFGReport:GenerateEntryButtons()
+end
 
 LFGReport:RegisterEvent("LFG_LIST_SEARCH_RESULTS_RECEIVED",
                         "OnReceiveSearchResults")
