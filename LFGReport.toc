@@ -6,5 +6,4 @@
 
 embeds.xml
 
-# core.xml
 core.lua
