@@ -6,7 +6,11 @@ GUI = LibStub("AceGUI-3.0")
 -- * Init
 -- * --------------------------------------------------------------------------
 
-function LFGReport:OnInitialize() self.buttons = {} end
+function LFGReport:OnInitialize()
+    self.buttons = {}
+    LFGReport:InitConfig()
+    LFGReport:InitDB()
+end
 
 -- * --------------------------------------------------------------------------
 -- * LFGReport utility
