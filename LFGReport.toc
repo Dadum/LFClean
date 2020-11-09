@@ -1,0 +1,10 @@
+## Interface: 90001
+## Title: LFGReport
+## Notes: Shortcuts to report spam in the Group Finder
+## Version: 0.0.1
+## Author: dadum
+
+embeds.xml
+
+# core.xml
+core.lua
