@@ -34,6 +34,14 @@ function LFGReport:Report(id)
     end
 end
 
+function LFGReport:GenerateReportTooltip(id)
+    local details = C_LFGList.GetSearchResultInfo(id)
+    GameTooltip:AddLine("Report group: " .. id, nil, nil, nil, --[[wrapText]]
+                        true)
+    GameTooltip:AddLine(details.name, 1, 1, 1, --[[wrapText]] true)
+    GameTooltip:Show()
+end
+
 function LFGReport:GenerateEntryButtons()
     local panel = _G.LFGListFrame.SearchPanel
     local buttons = _G.LFGListFrame.SearchPanel.ScrollFrame.buttons
@@ -51,6 +59,11 @@ function LFGReport:GenerateEntryButtons()
                 LFGReport.buttons[i]:SetScript("OnClick", function(self)
                     LFGReport:Report(self:GetParent().resultID)
                 end)
+                self.buttons[i]:SetScript("OnEnter", function(self)
+                    GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+                    LFGReport:GenerateReportTooltip(self:GetParent().resultID)
+                end)
+                self.buttons[i]:SetScript("OnLeave", GameTooltip_Hide)
                 LFGReport.buttons[i].id = buttons[i].resultID
                 LFGReport.buttons[i].tooltipText = "test"
 
@@ -92,6 +105,15 @@ function LFGReport:GenerateSelectedButton()
                 -- Remove selection
                 panel.selectedResult = nil
             end)
+            self.selected:SetScript("OnEnter", function(self)
+                GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+                if (panel.selectedResult) then
+                    LFGReport:GenerateReportTooltip(panel.selectedResult)
+                else
+                    GameTooltip:SetText("Select a group to report")
+                end
+            end)
+            self.selected:SetScript("OnLeave", GameTooltip_Hide)
         end
         self.selected:Show()
     else
