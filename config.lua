@@ -33,6 +33,19 @@ local buttonOptions = {
             get = function(info)
                 return LFGReport.conf.profile.selected
             end
+        },
+        buttonsReport = {
+            name = 'Buttons Report',
+            desc = 'When hiding an entry through a button, also report it for spam',
+            descStyle = 'inline',
+            type = 'toggle',
+            width = 'full',
+            set = function(info, val)
+                LFGReport.conf.profile.buttonsReport = val
+            end,
+            get = function(info)
+                return LFGReport.conf.profile.buttonsReport
+            end
         }
     }
 }
@@ -44,7 +57,9 @@ function LFGReport:InitConfig()
     CD:AddToBlizOptions("LFGReport", "LFGReport")
 end
 
-local defaults = {profile = {entry = true, selected = false}}
+local defaults = {
+    profile = {entry = true, selected = false, buttonsReport = true}
+}
 
 function LFGReport:InitDB() self.conf = DB:New("LFGReportConf", defaults, true) end
 

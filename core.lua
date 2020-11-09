@@ -21,11 +21,14 @@ end
 function LFGReport:Report(id)
     local panel = _G.LFGListFrame.SearchPanel
     if id then
-        local r = C_LFGList.GetSearchResultInfo(id)
-        self:Print("Reported group: " .. r.name)
+        local details = C_LFGList.GetSearchResultInfo(id)
+        self:Print("Hidden group: " .. details.name)
 
-        -- Report group as per blizz dropdown handler
-        C_LFGList.ReportSearchResult(id, "lfglistspam");
+        if (self.conf.profile.buttonsReport) then
+            -- Report listing
+            C_LFGList.ReportSearchResult(id, "lfglistspam");
+        end
+        -- Hide listing 
         LFGListSearchPanel_AddFilteredID(panel, id);
         LFGListSearchPanel_UpdateResultList(panel);
         LFGListSearchPanel_UpdateResults(panel);
