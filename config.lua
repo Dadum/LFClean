@@ -47,3 +47,12 @@ end
 local defaults = {profile = {entry = true, selected = false}}
 
 function LFGReport:InitDB() self.conf = DB:New("LFGReportConf", defaults, true) end
+
+-- * --------------------------------------------------------------------------
+-- * Slash commands
+-- * --------------------------------------------------------------------------
+
+LFGReport:RegisterChatCommand("lfgreport", "ChatCommand")
+LFGReport:RegisterChatCommand("lfgr", "ChatCommand")
+
+function LFGReport:ChatCommand(input) CD:Open("LFGReport") end
