@@ -44,6 +44,11 @@ local buttonOptions = {
             get = function(info)
                 return LFClean.conf.profile.buttonsReport
             end
+        },
+        hideNote = {
+            type = 'description',
+            name = 'NOTE: Manually hidden entries will show up again on the next login',
+            order = -1
         }
     }
 }
@@ -65,7 +70,7 @@ function LFClean:InitDB() self.conf = DB:New("LFCleanConf", defaults, true) end
 -- * Slash commands
 -- * --------------------------------------------------------------------------
 
-LFClean:RegisterChatCommand("lfgreport", "ChatCommand")
-LFClean:RegisterChatCommand("lfgr", "ChatCommand")
+LFClean:RegisterChatCommand("lfclean", "ChatCommand")
+LFClean:RegisterChatCommand("lfc", "ChatCommand")
 
 function LFClean:ChatCommand(input) CD:Open("LFClean") end
