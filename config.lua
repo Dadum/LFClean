@@ -1,4 +1,4 @@
-local LFGReport = LFGReport
+local LFClean = LFClean
 local C = LibStub("AceConfig-3.0")
 local CD = LibStub("AceConfigDialog-3.0")
 local DB = LibStub("AceDB-3.0")
@@ -15,10 +15,10 @@ local buttonOptions = {
             type = "toggle",
             width = "full",
             set = function(info, val)
-                LFGReport.conf.profile.entry = val
-                LFGReport:GenerateEntryButtons()
+                LFClean.conf.profile.entry = val
+                LFClean:GenerateEntryButtons()
             end,
-            get = function(info) return LFGReport.conf.profile.entry end
+            get = function(info) return LFClean.conf.profile.entry end
         },
         selected = {
             name = "Selected Button",
@@ -27,12 +27,10 @@ local buttonOptions = {
             type = "toggle",
             width = "full",
             set = function(info, val)
-                LFGReport.conf.profile.selected = val
-                LFGReport:GenerateSelectedButton()
+                LFClean.conf.profile.selected = val
+                LFClean:GenerateSelectedButton()
             end,
-            get = function(info)
-                return LFGReport.conf.profile.selected
-            end
+            get = function(info) return LFClean.conf.profile.selected end
         },
         buttonsReport = {
             name = 'Buttons Report',
@@ -41,10 +39,10 @@ local buttonOptions = {
             type = 'toggle',
             width = 'full',
             set = function(info, val)
-                LFGReport.conf.profile.buttonsReport = val
+                LFClean.conf.profile.buttonsReport = val
             end,
             get = function(info)
-                return LFGReport.conf.profile.buttonsReport
+                return LFClean.conf.profile.buttonsReport
             end
         }
     }
@@ -52,22 +50,22 @@ local buttonOptions = {
 
 local options = {type = 'group', args = {buttonOptions = buttonOptions}}
 
-function LFGReport:InitConfig()
-    C:RegisterOptionsTable("LFGReport", options, nil)
-    CD:AddToBlizOptions("LFGReport", "LFGReport")
+function LFClean:InitConfig()
+    C:RegisterOptionsTable("LFClean", options, nil)
+    CD:AddToBlizOptions("LFClean", "LFClean")
 end
 
 local defaults = {
     profile = {entry = true, selected = false, buttonsReport = true}
 }
 
-function LFGReport:InitDB() self.conf = DB:New("LFGReportConf", defaults, true) end
+function LFClean:InitDB() self.conf = DB:New("LFCleanConf", defaults, true) end
 
 -- * --------------------------------------------------------------------------
 -- * Slash commands
 -- * --------------------------------------------------------------------------
 
-LFGReport:RegisterChatCommand("lfgreport", "ChatCommand")
-LFGReport:RegisterChatCommand("lfgr", "ChatCommand")
+LFClean:RegisterChatCommand("lfgreport", "ChatCommand")
+LFClean:RegisterChatCommand("lfgr", "ChatCommand")
 
-function LFGReport:ChatCommand(input) CD:Open("LFGReport") end
+function LFClean:ChatCommand(input) CD:Open("LFClean") end

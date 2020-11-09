@@ -1,24 +1,24 @@
-LFGReport = LibStub("AceAddon-3.0"):NewAddon("LFGReport", "AceConsole-3.0",
-                                             "AceEvent-3.0")
+LFClean = LibStub("AceAddon-3.0"):NewAddon("LFClean", "AceConsole-3.0",
+                                           "AceEvent-3.0")
 GUI = LibStub("AceGUI-3.0")
 
 -- * --------------------------------------------------------------------------
 -- * Init
 -- * --------------------------------------------------------------------------
 
-function LFGReport:OnInitialize()
+function LFClean:OnInitialize()
     self.buttons = {}
     self.selectedButton = nil
 
-    LFGReport:InitConfig()
-    LFGReport:InitDB()
+    LFClean:InitConfig()
+    LFClean:InitDB()
 end
 
 -- * --------------------------------------------------------------------------
--- * LFGReport utility
+-- * LFClean utility
 -- * --------------------------------------------------------------------------
 
-function LFGReport:Report(id)
+function LFClean:Report(id)
     local panel = _G.LFGListFrame.SearchPanel
     if id then
         local details = C_LFGList.GetSearchResultInfo(id)
@@ -37,7 +37,7 @@ function LFGReport:Report(id)
     end
 end
 
-function LFGReport:GenerateReportTooltip(id)
+function LFClean:GenerateReportTooltip(id)
     local details = C_LFGList.GetSearchResultInfo(id)
     GameTooltip:AddLine("Report group: " .. id, nil, nil, nil, --[[wrapText]]
                         true)
@@ -45,7 +45,7 @@ function LFGReport:GenerateReportTooltip(id)
     GameTooltip:Show()
 end
 
-function LFGReport:GenerateEntryButtons()
+function LFClean:GenerateEntryButtons()
     local panel = _G.LFGListFrame.SearchPanel
     local buttons = _G.LFGListFrame.SearchPanel.ScrollFrame.buttons
     if (self.conf.profile.entry) then
@@ -58,11 +58,11 @@ function LFGReport:GenerateEntryButtons()
                 self.buttons[i]:SetSize(25, 25)
                 self.buttons[i]:SetAlpha(1)
                 self.buttons[i]:SetScript("OnClick", function(self)
-                    LFGReport:Report(self:GetParent().resultID)
+                    LFClean:Report(self:GetParent().resultID)
                 end)
                 self.buttons[i]:SetScript("OnEnter", function(self)
                     GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
-                    LFGReport:GenerateReportTooltip(self:GetParent().resultID)
+                    LFClean:GenerateReportTooltip(self:GetParent().resultID)
                 end)
                 self.buttons[i]:SetScript("OnLeave", GameTooltip_Hide)
             else
@@ -84,7 +84,7 @@ function LFGReport:GenerateEntryButtons()
     end
 end
 
-function LFGReport:GenerateSelectedButton()
+function LFClean:GenerateSelectedButton()
     if (self.conf.profile.selected) then
         local panel = _G.LFGListFrame.SearchPanel
         if (self.selectedButton == nil) then
@@ -97,7 +97,7 @@ function LFGReport:GenerateSelectedButton()
             self.selectedButton:SetScript("OnClick", function()
                 -- Report currently selected entry
                 local id = panel.selectedResult
-                LFGReport:Report(id)
+                LFClean:Report(id)
 
                 -- Remove selection
                 panel.selectedResult = nil
@@ -105,7 +105,7 @@ function LFGReport:GenerateSelectedButton()
             self.selectedButton:SetScript("OnEnter", function(self)
                 GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
                 if (panel.selectedResult) then
-                    LFGReport:GenerateReportTooltip(panel.selectedResult)
+                    LFClean:GenerateReportTooltip(panel.selectedResult)
                 else
                     GameTooltip:SetText("Select a group to report")
                 end
@@ -122,10 +122,10 @@ end
 -- * Events handling
 -- * --------------------------------------------------------------------------
 
-function LFGReport:OnReceiveSearchResults()
-    LFGReport:GenerateSelectedButton()
-    LFGReport:GenerateEntryButtons()
+function LFClean:OnReceiveSearchResults()
+    LFClean:GenerateSelectedButton()
+    LFClean:GenerateEntryButtons()
 end
 
-LFGReport:RegisterEvent("LFG_LIST_SEARCH_RESULTS_RECEIVED",
-                        "OnReceiveSearchResults")
+LFClean:RegisterEvent("LFG_LIST_SEARCH_RESULTS_RECEIVED",
+                      "OnReceiveSearchResults")
