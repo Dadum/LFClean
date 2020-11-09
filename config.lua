@@ -3,37 +3,45 @@ local C = LibStub("AceConfig-3.0")
 local CD = LibStub("AceConfigDialog-3.0")
 local DB = LibStub("AceDB-3.0")
 
-local options = {
+local buttonOptions = {
     type = 'group',
+    name = 'Buttons Options',
+    inline = true,
     args = {
-        selected = {
-            name = "Report Selected",
-            desc = "Add a button to report the selected group",
-            type = "toggle",
-            set = function(info, val)LFGReport.conf.profile.selected = val end,
-            get = function(info) return LFGReport.conf.profile.selected end
-        },
         entry = {
             name = "Report Entry",
-            desc = "Add one button for each entry of the group finder. NOTE: This might mess up the layout of the entries and make elements overlap",
+            desc = "Add one button for each entry of the group finder.\nNOTE: Might break the entry layout for long group names",
+            descStyle = "inline",
             type = "toggle",
+            width = "full",
             set = function(info, val)
                 LFGReport.conf.profile.entry = val
             end,
+            get = function(info) return LFGReport.conf.profile.entry end
+        },
+        selected = {
+            name = "Report Selected",
+            desc = "Add a button to report the selected group",
+            descStyle = "inline",
+            type = "toggle",
+            width = "full",
+            set = function(info, val)
+                LFGReport.conf.profile.selected = val
+            end,
             get = function(info)
-                return LFGReport.conf.profile.entry
+                return LFGReport.conf.profile.selected
             end
         }
     }
 }
+
+local options = {type = 'group', args = {buttonOptions = buttonOptions}}
 
 function LFGReport:InitConfig()
     C:RegisterOptionsTable("LFGReport", options, nil)
     CD:AddToBlizOptions("LFGReport", "LFGReport")
 end
 
-local defaults = {profile = {selected = true, entry = false}}
+local defaults = {profile = {entry = true, selected = false}}
 
-function LFGReport:InitDB()
-    self.conf = LibStub("AceDB-3.0"):New("LFGReportConf", defaults, true)
-end
+function LFGReport:InitDB() self.conf = DB:New("LFGReportConf", defaults, true) end
