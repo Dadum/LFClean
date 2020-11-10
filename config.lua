@@ -3,15 +3,12 @@ local C = LibStub("AceConfig-3.0")
 local CD = LibStub("AceConfigDialog-3.0")
 local DB = LibStub("AceDB-3.0")
 
-local buttonOptions = {
+local options = {
     type = 'group',
-    name = 'Buttons Options',
-    inline = true,
     args = {
         entryButtons = {
-            name = 'Entry Button',
+            name = 'Entry Buttons',
             desc = 'Add one button for each entry of the group finder.\nNOTE: Might break the entry layout for long group names',
-            descStyle = 'inline',
             type = 'toggle',
             width = 'full',
             set = function(info, val)
@@ -25,7 +22,6 @@ local buttonOptions = {
         selectedButton = {
             name = 'Selected Button',
             desc = 'Add a button to report the selected group entry',
-            descStyle = 'inline',
             type = 'toggle',
             width = 'full',
             set = function(info, val)
@@ -39,7 +35,6 @@ local buttonOptions = {
         buttonsReport = {
             name = 'Buttons Report',
             desc = 'When hiding an entry through a button, also report it for spam',
-            descStyle = 'inline',
             type = 'toggle',
             width = 'full',
             set = function(info, val)
@@ -48,16 +43,9 @@ local buttonOptions = {
             get = function(info)
                 return LFClean.conf.profile.buttonsReport
             end
-        },
-        hideNote = {
-            type = 'description',
-            name = 'NOTE: Manually hidden entries will show up again on the next login',
-            order = -1
         }
     }
 }
-
-local options = {type = 'group', args = {buttonOptions = buttonOptions}}
 
 function LFClean:InitConfig()
     C:RegisterOptionsTable("LFClean", options, nil)
