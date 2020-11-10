@@ -8,29 +8,33 @@ local buttonOptions = {
     name = 'Buttons Options',
     inline = true,
     args = {
-        entry = {
+        entryButtons = {
             name = 'Entry Button',
             desc = 'Add one button for each entry of the group finder.\nNOTE: Might break the entry layout for long group names',
             descStyle = 'inline',
             type = 'toggle',
             width = 'full',
             set = function(info, val)
-                LFClean.conf.profile.entry = val
+                LFClean.conf.profile.entryButtons = val
                 LFClean:GenerateEntryButtons()
             end,
-            get = function(info) return LFClean.conf.profile.entry end
+            get = function(info)
+                return LFClean.conf.profile.entryButtons
+            end
         },
-        selected = {
+        selectedButton = {
             name = 'Selected Button',
             desc = 'Add a button to report the selected group entry',
             descStyle = 'inline',
             type = 'toggle',
             width = 'full',
             set = function(info, val)
-                LFClean.conf.profile.selected = val
+                LFClean.conf.profile.selectedButton = val
                 LFClean:GenerateSelectedButton()
             end,
-            get = function(info) return LFClean.conf.profile.selected end
+            get = function(info)
+                return LFClean.conf.profile.selectedButton
+            end
         },
         buttonsReport = {
             name = 'Buttons Report',
@@ -61,7 +65,7 @@ function LFClean:InitConfig()
 end
 
 local defaults = {
-    profile = {entry = true, selected = false, buttonsReport = true}
+    profile = {entryButton = true, selectedButton = false, buttonsReport = true}
 }
 
 function LFClean:InitDB() self.conf = DB:New("LFCleanConf", defaults, true) end

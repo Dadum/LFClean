@@ -46,8 +46,8 @@ end
 
 function LFClean:GenerateEntryButtons()
     local panel = _G.LFGListFrame.SearchPanel
-    local buttons = _G.LFGListFrame.SearchPanel.ScrollFrame.buttons
-    if (self.conf.profile.entry) then
+    local buttons = panel.ScrollFrame.buttons
+    if (self.conf.profile.entryButtons) then
         for i = 1, #buttons do
             -- Only generate a button if it is missing
             if self.buttons[i] == nil then
@@ -89,7 +89,7 @@ function LFClean:GenerateEntryButtons()
 end
 
 function LFClean:GenerateSelectedButton()
-    if (self.conf.profile.selected) then
+    if (self.conf.profile.selectedButton) then
         local panel = _G.LFGListFrame.SearchPanel
         if (self.selectedButton == nil) then
             self.selectedButton = CreateFrame("Button", "btn",
