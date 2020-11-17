@@ -77,6 +77,16 @@ function LFClean:GenerateEntryButtons()
             buttons[i].DataDisplay:ClearAllPoints()
             buttons[i].DataDisplay:SetPoint("RIGHT", self.buttons[i], "LEFT",
                                             10, -1)
+
+            -- Set new max name width
+            if buttons[i].resultID then
+                local details = _G.C_LFGList.GetSearchResultInfo(
+                                    buttons[i].resultID)
+                local nameWidth = details.voiceChat == "" and 155 or 133
+                if (buttons[i].Name:GetWidth() > nameWidth) then
+                    buttons[i].Name:SetWidth(nameWidth)
+                end
+            end
         end
     else
         for i = 1, #self.buttons do
