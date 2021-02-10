@@ -66,33 +66,33 @@ function LFClean:GenerateEntryButtons()
             end
 
             -- Hide the button if currently queued for the group
-            if buttons[i].PendingLabel:IsShown() then
+            if panel.ScrollFrame.buttons[i].PendingLabel:IsShown() then
                 self.buttons[i]:Hide()
             else
                 self.buttons[i]:Show()
             end
 
             -- Anchor DataDisplay to the report button
-            buttons[i].DataDisplay:ClearAllPoints()
-            buttons[i].DataDisplay:SetPoint("RIGHT", self.buttons[i], "LEFT",
+            panel.ScrollFrame.buttons[i].DataDisplay:ClearAllPoints()
+            panel.ScrollFrame.buttons[i].DataDisplay:SetPoint("RIGHT", self.buttons[i], "LEFT",
                                             10, -1)
 
-            -- Set new max name width
-            if buttons[i].resultID then
+            -- Set new max name width to avoid overlapping
+            if panel.ScrollFrame.uttons[i].resultID then
                 local details = _G.C_LFGList.GetSearchResultInfo(
                                     buttons[i].resultID)
                 local nameWidth = details.voiceChat == "" and 155 or 133
-                if (buttons[i].Name:GetWidth() > nameWidth) then
-                    buttons[i].Name:SetWidth(nameWidth)
+                if (panel.ScrollFrame.buttons[i].Name:GetWidth() > nameWidth) then
+                    panel.ScrollFrame.buttons[i].Name:SetWidth(nameWidth)
                 end
             end
         end
     else
         for i = 1, #self.buttons do
-            self.buttons[i]:Hide()
+            self.buttons[i] = nil
             -- Reset DataDisplay to original anchor
-            buttons[i].DataDisplay:ClearAllPoints()
-            buttons[i].DataDisplay:SetPoint("RIGHT", buttons[i], "RIGHT", 0, -1)
+            panel.ScrollFrame.buttons[i].DataDisplay:ClearAllPoints()
+            panel.ScrollFrame.buttons[i].DataDisplay:SetPoint("RIGHT", buttons[i], "RIGHT", 0, -1)
         end
     end
 end
