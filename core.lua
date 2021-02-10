@@ -50,9 +50,11 @@ function LFClean:GenerateEntryButtons()
         for i = 1, #panel.ScrollFrame.buttons do
             -- Only generate a button if it is missing
             if self.buttons[i] == nil then
-                self.buttons[i] = CreateFrame("Button", "btn" .. i, buttons[i],
+                self.buttons[i] = CreateFrame("Button", "btn" .. i,
+                                              panel.ScrollFrame.buttons[i],
                                               "UIPanelSquareButton")
-                self.buttons[i]:SetPoint("RIGHT", buttons[i], "RIGHT", -1, -1)
+                self.buttons[i]:SetPoint("RIGHT", panel.ScrollFrame.buttons[i],
+                                         "RIGHT", -1, -1)
                 self.buttons[i]:SetSize(25, 25)
                 self.buttons[i]:SetAlpha(1)
                 self.buttons[i]:SetScript("OnClick", function(self)
@@ -74,13 +76,14 @@ function LFClean:GenerateEntryButtons()
 
             -- Anchor DataDisplay to the report button
             panel.ScrollFrame.buttons[i].DataDisplay:ClearAllPoints()
-            panel.ScrollFrame.buttons[i].DataDisplay:SetPoint("RIGHT", self.buttons[i], "LEFT",
-                                            10, -1)
+            panel.ScrollFrame.buttons[i].DataDisplay:SetPoint("RIGHT",
+                                                              self.buttons[i],
+                                                              "LEFT", 10, -1)
 
             -- Set new max name width to avoid overlapping
-            if panel.ScrollFrame.uttons[i].resultID then
+            if panel.ScrollFrame.buttons[i].resultID then
                 local details = _G.C_LFGList.GetSearchResultInfo(
-                                    buttons[i].resultID)
+                                    panel.ScrollFrame.buttons[i].resultID)
                 local nameWidth = details.voiceChat == "" and 155 or 133
                 if (panel.ScrollFrame.buttons[i].Name:GetWidth() > nameWidth) then
                     panel.ScrollFrame.buttons[i].Name:SetWidth(nameWidth)
@@ -92,7 +95,10 @@ function LFClean:GenerateEntryButtons()
             self.buttons[i] = nil
             -- Reset DataDisplay to original anchor
             panel.ScrollFrame.buttons[i].DataDisplay:ClearAllPoints()
-            panel.ScrollFrame.buttons[i].DataDisplay:SetPoint("RIGHT", buttons[i], "RIGHT", 0, -1)
+            panel.ScrollFrame.buttons[i].DataDisplay:SetPoint("RIGHT",
+                                                              panel.ScrollFrame
+                                                                  .buttons[i],
+                                                              "RIGHT", 0, -1)
         end
     end
 end
