@@ -18,6 +18,7 @@ end
 -- * LFClean utility
 -- * --------------------------------------------------------------------------
 
+-- * Report the group with the given id.
 function LFClean:Report(id)
     local panel = _G.LFGListFrame.SearchPanel
     if id then
@@ -33,6 +34,7 @@ function LFClean:Report(id)
     end
 end
 
+-- * Generate a tooltip to show the selected group id
 function LFClean:GenerateReportTooltip(id)
     local details = C_LFGList.GetSearchResultInfo(id)
     GameTooltip:AddLine("Report group: " .. details.name, nil, nil, nil, --[[wrapText]] true)
@@ -40,6 +42,7 @@ function LFClean:GenerateReportTooltip(id)
     GameTooltip:Show()
 end
 
+-- * Generate report button for each entry in the LFG list
 function LFClean:GenerateEntryButtons()
     local panel = _G.LFGListFrame.SearchPanel
     if (self.conf.profile.entryButtons) then
@@ -99,6 +102,7 @@ function LFClean:GenerateEntryButtons()
     end
 end
 
+-- * Generate button to report the selected group
 function LFClean:GenerateSelectedButton()
     if (self.conf.profile.selectedButton) then
         local panel = _G.LFGListFrame.SearchPanel
