@@ -24,7 +24,7 @@ function LFClean:Report(id)
     if id then
         local details = C_LFGList.GetSearchResultInfo(id)
 
-            C_LFGList.ReportSearchResult(id, "lfglistspam");
+        C_LFGList.ReportSearchResult(id, self.conf.profile.reportType);
         self:Print("Reported group: " .. details.name);
 
         LFGListSearchPanel_UpdateResultList(panel);

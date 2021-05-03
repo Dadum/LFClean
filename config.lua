@@ -11,6 +11,7 @@ local options = {
             desc = 'Add one button for each entry of the group finder.\nNOTE: Might break the entry layout for long group names',
             type = 'toggle',
             width = 'full',
+            order = 0,
             set = function(info, val)
                 LFClean.conf.profile.entryButtons = val
                 LFClean:GenerateEntryButtons()
@@ -24,6 +25,7 @@ local options = {
             desc = 'Add a button to report the selected group entry',
             type = 'toggle',
             width = 'full',
+            order = 1,
             set = function(info, val)
                 LFClean.conf.profile.selectedButton = val
                 LFClean:GenerateSelectedButton()
@@ -32,6 +34,20 @@ local options = {
                 return LFClean.conf.profile.selectedButton
             end
         },
+        reportType = {
+            name = 'Report Groups For',
+            desc = 'Defines what the groups should be reported for when using the shortcut buttons',
+            type = 'select',
+            order = 2,
+            set = function(info, val)
+                LFClean.conf.profile.reportType = val
+            end,
+            get = function(info)
+                return LFClean.conf.profile.reportType
+            end,
+            values = {['lfglistspam'] = 'Advertisement', ['lfglistname'] = 'Group Name', ['lfglistcomment'] = 'Description', ['badplayername'] = 'Leader Name'}
+
+        }
     }
 }
 
@@ -41,7 +57,7 @@ function LFClean:InitConfig()
 end
 
 local defaults = {
-    profile = {entryButton = true, selectedButton = false, buttonsReport = true}
+    profile = {entryButton = true, selectedButton = false, buttonsReport = true, reportType = 'lfglistspam'}
 }
 
 function LFClean:InitDB() self.conf = DB:New("LFCleanConf", defaults, true) end
