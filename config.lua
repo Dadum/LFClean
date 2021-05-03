@@ -4,13 +4,13 @@ local CD = LibStub("AceConfigDialog-3.0")
 local DB = LibStub("AceDB-3.0")
 
 local options = {
-    type = 'group',
+    type = "group",
     args = {
         entryButtons = {
-            name = 'Entry Buttons',
-            desc = 'Add one button for each entry of the group finder.\nNOTE: Might break the entry layout for long group names',
-            type = 'toggle',
-            width = 'full',
+            name = "Entry Buttons",
+            desc = "Add one button for each entry of the group finder.\nNOTE: Might break the entry layout for long group names",
+            type = "toggle",
+            width = "full",
             order = 0,
             set = function(info, val)
                 LFClean.conf.profile.entryButtons = val
@@ -21,10 +21,10 @@ local options = {
             end
         },
         selectedButton = {
-            name = 'Selected Button',
-            desc = 'Add a button to report the selected group entry',
-            type = 'toggle',
-            width = 'full',
+            name = "Selected Button",
+            desc = "Add a button to report the selected group entry",
+            type = "toggle",
+            width = "full",
             order = 1,
             set = function(info, val)
                 LFClean.conf.profile.selectedButton = val
@@ -35,9 +35,9 @@ local options = {
             end
         },
         reportType = {
-            name = 'Report Groups For',
-            desc = 'Defines what the groups should be reported for when using the shortcut buttons',
-            type = 'select',
+            name = "Report Groups For",
+            desc = "Defines what the groups should be reported for when using the shortcut buttons",
+            type = "select",
             order = 2,
             set = function(info, val)
                 LFClean.conf.profile.reportType = val
@@ -45,8 +45,12 @@ local options = {
             get = function(info)
                 return LFClean.conf.profile.reportType
             end,
-            values = {['lfglistspam'] = 'Advertisement', ['lfglistname'] = 'Group Name', ['lfglistcomment'] = 'Description', ['badplayername'] = 'Leader Name'}
-
+            values = {
+                ["lfglistspam"] = "Advertisement",
+                ["lfglistname"] = "Group Name",
+                ["lfglistcomment"] = "Description",
+                ["badplayername"] = "Leader Name"
+            }
         }
     }
 }
@@ -57,10 +61,17 @@ function LFClean:InitConfig()
 end
 
 local defaults = {
-    profile = {entryButton = true, selectedButton = false, buttonsReport = true, reportType = 'lfglistspam'}
+    profile = {
+        entryButton = true,
+        selectedButton = false,
+        buttonsReport = true,
+        reportType = "lfglistspam"
+    }
 }
 
-function LFClean:InitDB() self.conf = DB:New("LFCleanConf", defaults, true) end
+function LFClean:InitDB()
+    self.conf = DB:New("LFCleanConf", defaults, true)
+end
 
 -- * --------------------------------------------------------------------------
 -- * Slash commands
@@ -69,4 +80,6 @@ function LFClean:InitDB() self.conf = DB:New("LFCleanConf", defaults, true) end
 LFClean:RegisterChatCommand("lfclean", "ChatCommand")
 LFClean:RegisterChatCommand("lfc", "ChatCommand")
 
-function LFClean:ChatCommand(input) CD:Open("LFClean") end
+function LFClean:ChatCommand(input)
+    CD:Open("LFClean")
+end
