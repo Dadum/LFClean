@@ -1,3 +1,3 @@
 # LFClean
 
-Add shortcuts to hide and report advertisement/unwanted listings in the WoW Group Finder
+Add shortcuts to hide and report advertisement/offensive listings in the WoW Group Finder
