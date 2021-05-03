@@ -140,20 +140,10 @@ end
 function LFClean:OnReceiveSearchResults()
     self:GenerateSelectedButton()
     self:GenerateEntryButtons()
-
-    -- Include button generation in scroll update function. This is required to
-    -- ensure buttons are properly hidden for queued entries when scrolling.
-    local panel = _G.LFGListFrame.SearchPanel
-    panel.ScrollFrame.update = function()
-        _G.LFGListSearchPanel_UpdateResults(panel)
-        LFClean:GenerateEntryButtons()
-    end
 end
 
 LFClean:RegisterEvent("LFG_LIST_SEARCH_RESULTS_RECEIVED",
                       "OnReceiveSearchResults")
 
-function LFClean:OnApplicationStatusUpdate() self:GenerateEntryButtons() end
-
-LFClean:RegisterEvent("LFG_LIST_APPLICATION_STATUS_UPDATED",
-                      "OnApplicationStatusUpdate")
+LFClean:RegisterEvent("LFG_LIST_SEARCH_RESULT_UPDATED",
+                      "GenerateEntryButtons")
