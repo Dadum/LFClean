@@ -22,14 +22,10 @@ function LFClean:Report(id)
     local panel = _G.LFGListFrame.SearchPanel
     if id then
         local details = C_LFGList.GetSearchResultInfo(id)
-        self:Print("Hidden group: " .. details.name)
 
-        if (self.conf.profile.buttonsReport) then
-            -- Report listing
             C_LFGList.ReportSearchResult(id, "lfglistspam");
-        end
-        -- Hide listing 
-        LFGListSearchPanel_AddFilteredID(panel, id);
+        self:Print("Reported group: " .. details.name);
+
         LFGListSearchPanel_UpdateResultList(panel);
         LFGListSearchPanel_UpdateResults(panel);
     else
@@ -39,8 +35,8 @@ end
 
 function LFClean:GenerateReportTooltip(id)
     local details = C_LFGList.GetSearchResultInfo(id)
-    GameTooltip:AddLine("Hide group: " .. id, nil, nil, nil, --[[wrapText]] true)
-    GameTooltip:AddLine(details.name, 1, 1, 1, --[[wrapText]] true)
+    GameTooltip:AddLine("Report group: " .. details.name, nil, nil, nil, --[[wrapText]] true)
+    GameTooltip:AddLine("Group id: " .. id, 1, 1, 1, --[[wrapText]] true)
     GameTooltip:Show()
 end
 

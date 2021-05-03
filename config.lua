@@ -32,18 +32,6 @@ local options = {
                 return LFClean.conf.profile.selectedButton
             end
         },
-        buttonsReport = {
-            name = 'Buttons Report',
-            desc = 'When hiding an entry through a button, also report it for spam',
-            type = 'toggle',
-            width = 'full',
-            set = function(info, val)
-                LFClean.conf.profile.buttonsReport = val
-            end,
-            get = function(info)
-                return LFClean.conf.profile.buttonsReport
-            end
-        }
     }
 }
 
