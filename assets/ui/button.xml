@@ -1,8 +1,9 @@
 <Ui xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
     <Button name="LFClean_ReportButton" virtual="true">
         <Size x="32" y="32" />
-        <NormalTexture file="Interface\BUTTONS\UI-SquareButton-Up" desaturated="true" /> 
-        <PushedTexture file="Interface\BUTTONS\UI-SquareButton-Down" desaturated="true" />
+        <NormalTexture file="Interface\BUTTONS\UI-SquareButton-Up" /> 
+        <PushedTexture file="Interface\BUTTONS\UI-SquareButton-Down" />
+        <DisabledTexture file="Interface\BUTTONS\UI-SquareButton-Disabled" />
         <HighlightTexture file="Interface\BUTTONS\UI-Common-MouseHilight" alphaMode="ADD" />
         <Layers>
             <Layer level="ARTWORK">

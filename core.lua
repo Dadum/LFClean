@@ -177,6 +177,13 @@ function LFClean:GenerateSelectedButton()
             )
             self.selectedButton:SetScript("OnLeave", GameTooltip_Hide)
         end
+
+        -- Disable selected button if no entry is selected
+        if (panel.selectedResult) then
+            self.selectedButton:Enable()
+        else
+            self.selectedButton:Disable()
+        end
         self.selectedButton:Show()
     else
         if (self.selectedButton) then
@@ -189,14 +196,11 @@ end
 -- * Events handling
 -- * --------------------------------------------------------------------------
 
-function LFClean:OnReceiveSearchResults()
+function LFClean:GenerateButtons()
     self:GenerateSelectedButton()
     self:GenerateEntryButtons()
 end
 
-LFClean:RegisterEvent(
-    "LFG_LIST_SEARCH_RESULTS_RECEIVED",
-    "OnReceiveSearchResults"
-)
+LFClean:RegisterEvent("LFG_LIST_SEARCH_RESULTS_RECEIVED", "GenerateButtons")
 
-LFClean:RegisterEvent("LFG_LIST_SEARCH_RESULT_UPDATED", "GenerateEntryButtons")
+LFClean:RegisterEvent("LFG_LIST_SEARCH_RESULT_UPDATED", "GenerateButtons")
