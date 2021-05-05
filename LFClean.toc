@@ -7,6 +7,3 @@
 ## SavedVariables: LFCleanConf
 
 embeds.xml
-
-core.lua
-config.lua

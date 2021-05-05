@@ -62,9 +62,9 @@ function LFClean:GenerateEntryButtons()
                 self.buttons[i] =
                     CreateFrame(
                     "Button",
-                    "btn" .. i,
+                    "entryButton" .. i,
                     panel.ScrollFrame.buttons[i],
-                    "UIPanelSquareButton"
+                    "LFClean_ReportButton"
                 )
                 self.buttons[i]:SetPoint(
                     "RIGHT",
@@ -73,8 +73,6 @@ function LFClean:GenerateEntryButtons()
                     -1,
                     -1
                 )
-                self.buttons[i]:SetSize(25, 25)
-                self.buttons[i]:SetAlpha(1)
                 self.buttons[i]:SetScript(
                     "OnClick",
                     function(self)
@@ -144,9 +142,9 @@ function LFClean:GenerateSelectedButton()
             self.selectedButton =
                 CreateFrame(
                 "Button",
-                "btn",
+                "selectedButton",
                 _G.LFGListFrame.SearchPanel,
-                "UIPanelSquareButton"
+                "LFClean_ReportButton"
             )
             self.selectedButton:SetPoint(
                 "RIGHT",
@@ -155,7 +153,6 @@ function LFClean:GenerateSelectedButton()
                 -5,
                 0
             )
-            self.selectedButton:SetSize(25, 25)
             self.selectedButton:SetScript(
                 "OnClick",
                 function()

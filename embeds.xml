@@ -6,4 +6,8 @@
     <Include file="lib\AceConfig-3.0\AceConfig-3.0.xml" />
     <Include file="lib\AceConfig-3.0\AceConfigDialog-3.0\AceConfigDialog-3.0.xml" />
     <Include file="lib\AceDB-3.0\AceDB-3.0.xml" />
+
+    <Include file="assets/ui/button.xml" />
+    <Script file="core.lua" />
+    <Script file="config.lua" />
 </Ui>
