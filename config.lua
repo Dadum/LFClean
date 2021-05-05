@@ -62,7 +62,7 @@ end
 
 local defaults = {
     profile = {
-        entryButton = true,
+        entryButtons = true,
         selectedButton = false,
         buttonsReport = true,
         reportType = "lfglistspam"
