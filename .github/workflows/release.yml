@@ -24,6 +24,6 @@ jobs:
         with:
           tag_name: ${{ github.ref }}
           release_name: ${{ github.event.repository.name }} ${{ github.ref }}
-          body-path: CHANGELOG.md
+          body_path: "CHANGELOG.md"
           draft: false
           prerelease: false
