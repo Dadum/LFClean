@@ -49,6 +49,24 @@ function LFClean:GenerateReportTooltip(id)
         true
     )
     GameTooltip:AddLine("Group id: " .. id, 1, 1, 1 --[[wrapText]], true)
+    if (details.leaderName) then
+        GameTooltip:AddLine(
+            "Leader: " .. details.leaderName,
+            1,
+            1,
+            1 --[[wrapText]],
+            true
+        )
+    else
+        GameTooltip:AddLine("Leader: not found", 1, 1, 1 --[[wrapText]], true)
+    end
+    GameTooltip:AddLine(
+        "Voice: " .. details.voiceChat,
+        1,
+        1,
+        1 --[[wrapText]],
+        true
+    )
     GameTooltip:Show()
 end
 
