@@ -1,7 +1,7 @@
 ## Interface: 90005
 ## Title: LFClean
 ## Notes: Shortcuts to report spam in the Group Finder
-## Version: 0.0.1
+## Version: 0.0.4
 ## Author: dadum
 
 ## SavedVariables: LFCleanConf
