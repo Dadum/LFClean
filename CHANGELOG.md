@@ -1,1 +1,10 @@
-* Fix entry buttons laggy to update when scrolling
+### v0.0.4
+* Fix entry buttons laggy update when scrolling
+
+### v0.0.3
+* Add report button icon
+* Disable report selected button when no group is selected
+* Fix typo in default options
+  
+### v0.0.2
+* Fix addon crashing on report due to 9.0.5 changes
