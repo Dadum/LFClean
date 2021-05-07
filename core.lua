@@ -14,8 +14,8 @@ function LFClean:OnInitialize()
     self.buttons = {}
     self.selectedButton = nil
 
-    LFClean:InitConfig()
-    LFClean:InitDB()
+    self:InitConfig()
+    self:InitDB()
     self:SetUpdatefunction()
 end
 
