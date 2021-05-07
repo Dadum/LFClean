@@ -24,8 +24,10 @@ end
 -- * --------------------------------------------------------------------------
 
 function LFClean:SetUpdatefunction()
-    _G.LFGListFrame.SearchPanel.ScrollFrame.update = function()
-        _G.LFGListSearchPanel_UpdateResults(_G.LFGListFrame.SearchPanel)
+    local panel = _G.LFGListFrame.SearchPanel
+    local oldUpdate = panel.ScrollFrame.update
+    panel.ScrollFrame.update = function()
+        oldUpdate()
         LFClean:GenerateButtons()
     end
 end
