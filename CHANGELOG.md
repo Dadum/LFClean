@@ -1,1 +1,1 @@
-* test
+* Fix entry buttons laggy to update when scrolling

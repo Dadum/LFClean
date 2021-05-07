@@ -16,11 +16,20 @@ function LFClean:OnInitialize()
 
     LFClean:InitConfig()
     LFClean:InitDB()
+    self:SetUpdatefunction()
 end
 
 -- * --------------------------------------------------------------------------
 -- * LFClean utility
 -- * --------------------------------------------------------------------------
+
+function LFClean:SetUpdatefunction()
+   local panel = _G.LFGListFrame.SearchPanel
+    panel.ScrollFrame.update = function()
+        _G.LFGListSearchPanel_UpdateResults(panel)
+        LFClean:GenerateButtons()
+    end
+end
 
 -- * Report the group with the given id.
 function LFClean:Report(id)
