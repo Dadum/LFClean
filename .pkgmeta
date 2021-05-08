@@ -4,4 +4,6 @@ ignore:
     CHANGELOG.md
     README.md
     TODO.md
+    assets/icon
+    assets/screenshots
 

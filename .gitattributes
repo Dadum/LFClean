@@ -1,5 +1,8 @@
-.github         export-ignore
-.gitattributes  export-ignore
-.gitignore      export-ignore
-.pkgmeta        export-ignore
-*.md            export-ignore
+.github                 export-ignore
+.gitattributes          export-ignore
+.gitignore              export-ignore
+.pkgmeta                export-ignore
+.assets/icon            export-ignore
+.assets/screenshots     export-ignore
+
+*.md                    export-ignore
