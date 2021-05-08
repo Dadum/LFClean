@@ -51,6 +51,8 @@ function LFClean:Report(id)
         LFGListSearchPanel_UpdateResultList(panel)
         LFGListSearchPanel_UpdateResults(panel)
         self:GenerateButtons()
+
+        self.conf.profile.blacklist[details.leaderName] = true
     else
         self:Print("No group selected")
     end
@@ -228,6 +230,25 @@ function LFClean:GenerateSelectedButton()
     end
 end
 
+function LFClean:IsBlacklisted(leader)
+    for i, v in pairs(self.conf.profile.blacklist) do
+        if v == leader then
+            return true
+        end
+    end
+    return false
+end
+
+function LFClean:AnalyzeResults()
+    local panel = _G.LFGListFrame.SearchPanel
+    for i, id in pairs(panel.results) do
+        local details = C_LFGList.GetSearchResultInfo(id)
+        if self.conf.profile.blacklist[details.leaderName] then
+            self:Print("blacklisted entry " .. details.leaderName)
+        end
+    end
+end
+
 -- * --------------------------------------------------------------------------
 -- * Events handling
 -- * --------------------------------------------------------------------------
@@ -238,6 +259,14 @@ function LFClean:GenerateButtons()
     self:GenerateEntryButtons()
 end
 
-LFClean:RegisterEvent("LFG_LIST_SEARCH_RESULTS_RECEIVED", "GenerateButtons")
+function LFClean:OnLGFListSearchResultsReceived()
+    self:GenerateButtons()
+    self:AnalyzeResults()
+end
+
+LFClean:RegisterEvent(
+    "LFG_LIST_SEARCH_RESULTS_RECEIVED",
+    "OnLGFListSearchResultsReceived"
+)
 
 LFClean:RegisterEvent("LFG_LIST_SEARCH_RESULT_UPDATED", "GenerateButtons")

@@ -65,7 +65,8 @@ local defaults = {
         entryButtons = true,
         selectedButton = false,
         buttonsReport = true,
-        reportType = "lfglistspam"
+        reportType = "lfglistspam",
+        blacklist = {}
     }
 }
 
