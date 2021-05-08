@@ -4,5 +4,6 @@
 .pkgmeta                export-ignore
 .assets/icon            export-ignore
 .assets/screenshots     export-ignore
+LICENSE                 export-ignore
 
 *.md                    export-ignore
