@@ -1,0 +1,7 @@
+package-as: LFClean
+
+ignore: 
+    CHANGELOG.md
+    README.md
+    TODO.md
+
