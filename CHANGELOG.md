@@ -1,3 +1,6 @@
+### v1.0.1
+* Release build
+
 ### v1.0.0
 * Fix entry buttons laggy update when scrolling
 
