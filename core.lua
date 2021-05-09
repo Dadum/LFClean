@@ -50,6 +50,7 @@ function LFClean:Report(id)
 
         LFGListSearchPanel_UpdateResultList(panel)
         LFGListSearchPanel_UpdateResults(panel)
+        self:GenerateButtons()
     else
         self:Print("No group selected")
     end
