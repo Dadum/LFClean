@@ -11,6 +11,8 @@ jobs:
   build:
     name: Create Release
     runs-on: ubuntu-latest
+    env: 
+      IS_PRERELEASE: ${{ contains(github.ref, 'alpha') || contains(github.ref, 'beta') }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -26,7 +28,7 @@ jobs:
           release_name: ${{ github.event.repository.name }} ${{ github.ref }}
           body_path: "CHANGELOG.md"
           draft: false
-          prerelease: false
+          prerelease: ${{ $env.IS_PRERELEASE }}
       - name: Create Release Asset
         run: git archive --format=zip -o LFClean.zip HEAD
       - name: Upload Release Asset
