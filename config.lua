@@ -72,7 +72,7 @@ local blacklistOptions = {
         end
     },
     deleteEntry = {
-        name = "remove",
+        name = "Remove",
         type = "execute",
         order = 20,
         func = function()
