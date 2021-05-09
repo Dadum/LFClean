@@ -1,3 +1,13 @@
+## v1.1.0-alpha0
+* Add blacklist structure
+* Add option to automatically blacklist leaders on report
+* Add option blacklist leader by right-clicking shortcut buttons
+* Add option to automatically report all entries from blacklisted leaders when loading LFG results
+* Add blacklist management options:
+  * Remove single names from the blacklist
+  * Wipe the blacklist clean
+* Show in the tooltip if the leader of an entry is already blacklisted
+
 ### v1.0.2
 * Fix laggy button refresh after reporing a group
 
