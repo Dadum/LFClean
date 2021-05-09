@@ -1,12 +1,12 @@
 package-as: LFClean
 
 ignore: 
-    CHANGELOG.md
-    README.md
-    TODO.md
-    LICENSE
-    assets/icon
-    assets/screenshots
+    - CHANGELOG.md
+    - README.md
+    - TODO.md
+    - LICENSE
+    - assets/icon
+    - assets/screenshots
 
 manual-changelog: CHANGELOG.md
 
