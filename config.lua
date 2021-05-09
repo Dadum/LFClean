@@ -77,6 +77,7 @@ local blacklistOptions = {
         func = function()
             if LFClean.blmSelect then
                 LFClean.conf.profile.blacklist[LFClean.blmSelect] = nil
+                LFClean.blmSelect = nil
             else
                 LFClean:Print("No blacklist entry selected")
             end
