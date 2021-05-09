@@ -1,3 +1,6 @@
+### v1.0.2
+* Fix laggy button refresh after reporing a group
+
 ### v1.0.1
 * Release build
 
