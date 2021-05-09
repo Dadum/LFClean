@@ -91,6 +91,15 @@ function LFClean:GenerateReportTooltip(id)
         1 --[[wrapText]],
         true
     )
+    GameTooltip:AddLine(
+        "Blacklisted: " ..
+            (self.conf.profile.blacklist[details.leaderName] and "yes" or "no"),
+        1,
+        1,
+        1 --[[wrapText]],
+        true
+    )
+
     GameTooltip:Show()
 end
 
