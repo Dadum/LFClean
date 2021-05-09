@@ -53,10 +53,49 @@ local shortcutsOptions = {
 }
 
 local blacklistOptions = {
+    reportBlacklists = {
+        name = "Reporting Blacklists",
+        desc = "Reporting a group automatically blacklists the leader",
+        type = "toggle",
+        width = 1.5,
+        order = 10,
+        set = function(info, val)
+            LFClean.conf.profile.autoBL = val
+        end,
+        get = function(info)
+            return LFClean.conf.profile.autoBL
+        end
+    },
+    rightClickBlacklists = {
+        name = "Right Click Blacklists",
+        desc = "Right clicking a report shortcuts adds the leader of the group to the blacklist",
+        type = "toggle",
+        width = 1.5,
+        order = 20,
+        set = function(info, val)
+            LFClean.conf.profile.rightClickBL = val
+        end,
+        get = function(info)
+            return LFClean.conf.profile.rightClickBL
+        end
+    },
+    autoReport = {
+        name = "Automatically Report Blacklist",
+        desc = "Automatically report any group from a member of the blacklist when search results are loaded",
+        type = "toggle",
+        width = "full",
+        order = 30,
+        set = function(info, val)
+            LFClean.conf.profile.reportBL = val
+        end,
+        get = function(info)
+            return LFClean.conf.profile.reportBL
+        end
+    },
     manageBlacklist = {
         name = "Manage Blacklist",
         type = "select",
-        order = 10,
+        order = 40,
         set = function(info, val)
             LFClean.blmSelect = val
         end,
@@ -80,7 +119,7 @@ local blacklistOptions = {
     deleteEntry = {
         name = "Remove",
         type = "execute",
-        order = 20,
+        order = 50,
         func = function()
             LFClean.conf.profile.blacklist[LFClean.blmSelect] = nil
             LFClean.blmSelect = nil
@@ -95,7 +134,7 @@ local blacklistOptions = {
     wipeBlacklist = {
         name = "Clear Blacklist",
         type = "execute",
-        order = 30,
+        order = 60,
         confirm = true,
         confirmText = "This will completely wipe the blacklist!",
         func = function()
@@ -135,7 +174,10 @@ local defaults = {
         selectedButton = false,
         buttonsReport = true,
         reportType = "lfglistspam",
-        blacklist = {}
+        blacklist = {},
+        autoBL = false,
+        rightClickBL = true,
+        reportBL = false
     }
 }
 

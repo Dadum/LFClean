@@ -39,6 +39,12 @@ function LFClean:SetUpdatefunction()
     end
 end
 
+-- * Add the given name to the blacklist
+function LFClean:BlacklistName(name)
+    self.conf.profile.blacklist[name] = true
+    self:Print(name .. " blacklisted")
+end
+
 -- * Report the group with the given id.
 function LFClean:Report(id)
     local panel = _G.LFGListFrame.SearchPanel
@@ -51,8 +57,6 @@ function LFClean:Report(id)
         LFGListSearchPanel_UpdateResultList(panel)
         LFGListSearchPanel_UpdateResults(panel)
         self:GenerateButtons()
-
-        self.conf.profile.blacklist[details.leaderName] = true
     else
         self:Print("No group selected")
     end
@@ -113,8 +117,24 @@ function LFClean:GenerateEntryButtons()
                 )
                 self.buttons[i]:SetScript(
                     "OnClick",
-                    function(self)
-                        LFClean:Report(self:GetParent().resultID)
+                    function(self, arg1)
+                        local id = self:GetParent().resultID
+                        if arg1 == "LeftButton" then
+                            LFClean:Report(id)
+                            -- Add leader to the blacklist if option is enabled
+                            if LFClean.conf.profile.reportBL then
+                                local details =
+                                    C_LFGList.GetSearchResultInfo(id)
+                                LFClean:BlacklistName(details.leaderName)
+                            end
+                        elseif
+                            arg1 == "RightButton" and
+                                LFClean.conf.profile.rightClickBL
+                         then
+                            -- Add leader to the blacklist if option is enabled
+                            local details = C_LFGList.GetSearchResultInfo(id)
+                            LFClean:BlacklistName(details.leaderName)
+                        end
                     end
                 )
                 self.buttons[i]:SetScript(
@@ -193,10 +213,25 @@ function LFClean:GenerateSelectedButton()
             )
             self.selectedButton:SetScript(
                 "OnClick",
-                function()
-                    -- Report currently selected entry
+                function(self, arg1)
                     local id = panel.selectedResult
-                    LFClean:Report(id)
+
+                    if arg1 == "LeftButton" then
+                        -- Report currently selected entry
+                        LFClean:Report(id)
+                        -- Add leader to the blacklist if option is enabled
+                        if LFClean.conf.profile.reportBL then
+                            local details = C_LFGList.GetSearchResultInfo(id)
+                            LFClean:BlacklistName(details.leaderName)
+                        end
+                    elseif
+                        arg1 == "RightButton" and
+                            LFClean.conf.profile.rightClickBL
+                     then
+                        -- Blacklist leader of currently selected entry-- Add leader to the blacklist if option is enabled
+                        local details = C_LFGList.GetSearchResultInfo(id)
+                        LFClean:BlacklistName(details.leaderName)
+                    end
 
                     -- Remove selection
                     panel.selectedResult = nil
@@ -230,21 +265,17 @@ function LFClean:GenerateSelectedButton()
     end
 end
 
-function LFClean:IsBlacklisted(leader)
-    for i, v in pairs(self.conf.profile.blacklist) do
-        if v == leader then
-            return true
-        end
-    end
-    return false
-end
-
+-- * Analyze the LFG search results, reporting all groups with a blacklisted
+-- * leader (if the option is enabled)
 function LFClean:AnalyzeResults()
     local panel = _G.LFGListFrame.SearchPanel
     for i, id in pairs(panel.results) do
         local details = C_LFGList.GetSearchResultInfo(id)
-        if self.conf.profile.blacklist[details.leaderName] then
-            self:Print("blacklisted entry " .. details.leaderName)
+        if
+            self.conf.profile.reportBL and
+                self.conf.profile.blacklist[details.leaderName]
+         then
+            self:Report(id)
         end
     end
 end
