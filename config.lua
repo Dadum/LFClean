@@ -74,6 +74,7 @@ local blacklistOptions = {
     deleteEntry = {
         name = "remove",
         type = "execute",
+        order = 20,
         func = function()
             if LFClean.blmSelect then
                 LFClean.conf.profile.blacklist[LFClean.blmSelect] = nil
@@ -81,6 +82,16 @@ local blacklistOptions = {
             else
                 LFClean:Print("No blacklist entry selected")
             end
+        end
+    },
+    wipeBlacklist = {
+        name = "Clear Blacklist",
+        type = "execute",
+        order = 30,
+        confirm = true,
+        confirmText = "This will completely wipe the blacklist!",
+        func = function()
+            LFClean.conf.profile.blacklist = {}
         end
     }
 }
