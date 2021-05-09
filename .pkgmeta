@@ -8,6 +8,8 @@ ignore:
     - assets/icon
     - assets/screenshots
 
-manual-changelog: CHANGELOG.md
+manual-changelog:
+    filename: CHANGELOG.md
+	markup-type: markdown
 
 license-output: LICENSE
