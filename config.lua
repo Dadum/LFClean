@@ -69,6 +69,12 @@ local blacklistOptions = {
                 blacklist[k] = k
             end
             return blacklist
+        end,
+        disabled = function()
+            if next(LFClean.conf.profile.blacklist, nil) then
+                return false
+            end
+            return true
         end
     },
     deleteEntry = {
@@ -76,12 +82,14 @@ local blacklistOptions = {
         type = "execute",
         order = 20,
         func = function()
+            LFClean.conf.profile.blacklist[LFClean.blmSelect] = nil
+            LFClean.blmSelect = nil
+        end,
+        disabled = function()
             if LFClean.blmSelect then
-                LFClean.conf.profile.blacklist[LFClean.blmSelect] = nil
-                LFClean.blmSelect = nil
-            else
-                LFClean:Print("No blacklist entry selected")
+                return false
             end
+            return true
         end
     },
     wipeBlacklist = {
