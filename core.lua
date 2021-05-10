@@ -278,6 +278,7 @@ end
 -- * leader (if the option is enabled)
 function LFClean:AnalyzeResults()
     local panel = _G.LFGListFrame.SearchPanel
+    local n = 0
     for i, id in pairs(panel.results) do
         local details = C_LFGList.GetSearchResultInfo(id)
         if
@@ -286,7 +287,9 @@ function LFClean:AnalyzeResults()
          then
             self:Report(id)
         end
+        n = n + 1
     end
+    self:Print("Done analyzing " .. n .. " entries")
 end
 
 -- * --------------------------------------------------------------------------

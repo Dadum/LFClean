@@ -1,4 +1,7 @@
-## v1.1.0-alpha0
+## v1.1.0-alpha1
+* Declare number of analyzed entries
+
+### v1.1.0-alpha0
 * Add blacklist structure
 * Add option to automatically blacklist leaders on report
 * Add option blacklist leader by right-clicking shortcut buttons
