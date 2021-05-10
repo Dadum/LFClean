@@ -16,27 +16,21 @@ function LFClean:OnInitialize()
 
     self:InitConfig()
     self:InitDB()
-    self:SetUpdatefunction()
+    self:SetUpdateHook()
 end
 
 -- * --------------------------------------------------------------------------
 -- * LFClean utility
 -- * --------------------------------------------------------------------------
 
--- * Overwrite blizz's LFG ScrollFrame update function, adding LFClean's button
--- * generation to it. This allows to smoothly update the buttons while
--- * scrolling rather than waiting on the next update event. Though, this seems
--- * to make LFClean assume the costs of blizz's update function, making the
--- * memory costs of the addon explode while scrolling.
-function LFClean:SetUpdatefunction()
-    local panel = _G.LFGListFrame.SearchPanel
-    local oldUpdate = panel.ScrollFrame.update
-    panel.ScrollFrame.update = function()
-        -- Do blizz's default stuff
-        oldUpdate()
-
-        LFClean:GenerateButtons()
-    end
+-- * Hook the LFGList SearchPanel update function to generate buttons.
+function LFClean:SetUpdateHook()
+    hooksecurefunc(
+        "LFGListSearchPanel_UpdateResults",
+        function()
+            self:GenerateButtons()
+        end
+    )
 end
 
 -- * Report the group with the given id.
@@ -228,16 +222,8 @@ function LFClean:GenerateSelectedButton()
     end
 end
 
--- * --------------------------------------------------------------------------
--- * Events handling
--- * --------------------------------------------------------------------------
-
 -- * Helper to generate both the entry buttons and the select button
 function LFClean:GenerateButtons()
     self:GenerateSelectedButton()
     self:GenerateEntryButtons()
 end
-
-LFClean:RegisterEvent("LFG_LIST_SEARCH_RESULTS_RECEIVED", "GenerateButtons")
-
-LFClean:RegisterEvent("LFG_LIST_SEARCH_RESULT_UPDATED", "GenerateButtons")
