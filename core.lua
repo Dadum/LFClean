@@ -275,11 +275,12 @@ function LFClean:GenerateSelectedButton()
 end
 
 -- * Analyze the LFG search results, reporting all groups with a blacklisted
--- * leader (if the option is enabled)
+-- * leader (if the option is enabled). This seems to be limited to 100 groups,
+-- * as it's the maximum size returned by C_LFGList.GetFilteredSearchResults().
 function LFClean:AnalyzeResults()
-    local panel = _G.LFGListFrame.SearchPanel
+    local tot, results = C_LFGList.GetFilteredSearchResults()
     local n = 0
-    for _, id in pairs(panel.results) do
+    for _, id in ipairs(results) do
         local details = C_LFGList.GetSearchResultInfo(id)
         if
             self.conf.profile.reportBL and
@@ -289,7 +290,7 @@ function LFClean:AnalyzeResults()
         end
         n = n + 1
     end
-    self:Print("Done analyzing " .. n .. " entries")
+    self:Print("Done analyzing " .. n .. " of " .. tot .. " entries")
 end
 
 -- * --------------------------------------------------------------------------
