@@ -1,4 +1,6 @@
-## v1.1.0-alpha1
+## v1.1.0-alpha2
+* Also manually hide blacklisted entrie, even if the report option is active
+### v1.1.0-alpha1
 * Use hooks to launch the results analysis
 * Add (default) option to only hide groups when analyzing entries
 
