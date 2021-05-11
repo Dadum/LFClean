@@ -103,6 +103,9 @@ local blacklistOptions = {
         end,
         get = function(info)
             return LFClean.conf.profile.reportBL
+        end,
+        disabled = function()
+            return not LFClean.conf.profile.hideBL
         end
     },
     manageBlacklist = {

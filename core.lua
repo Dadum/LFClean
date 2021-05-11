@@ -282,7 +282,7 @@ function LFClean:AnalyzeResults(results)
     for i, id in ipairs(results) do
         local details = C_LFGList.GetSearchResultInfo(id)
         if self.conf.profile.blacklist[details.leaderName] then
-            if self.conf.profile.reportBL then
+            if self.conf.profile.reportBL and self.conf.profile.hideBL then
                 self:Report(id)
             elseif self.conf.profile.hideBL then
                 table.remove(results, i)
