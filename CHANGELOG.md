@@ -1,4 +1,4 @@
-## v1.1.0-alpha1
+## v1.1.0-alpha1 (WIP)
 * Declare number of analyzed entries
 
 ### v1.1.0-alpha0
@@ -11,8 +11,9 @@
   * Wipe the blacklist clean
 * Show in the tooltip if the leader of an entry is already blacklisted
 
-### v1.0.2
+## v1.0.2 (WIP)
 * Fix laggy button refresh after reporing a group
+* Fix the memory usage exploding when scrolling through the group finder
 
 ### v1.0.1
 * Release build
