@@ -277,7 +277,6 @@ end
 -- * Analyze the LFG search results, reporting/hiding all groups with a blacklisted
 -- * leader (if the option is enabled).
 function LFClean:AnalyzeResults(results)
-    local tot = #results
     for i, id in ipairs(results) do
         local details = C_LFGList.GetSearchResultInfo(id)
         if self.conf.profile.blacklist[details.leaderName] then
