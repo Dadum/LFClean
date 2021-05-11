@@ -120,7 +120,7 @@ function LFClean:GenerateEntryButtons()
             end
 
             -- Hide the button if currently queued for the group
-            if panel.ScrollFrame.buttons[i].PendingLabel:IsShown() then
+            if panel.ScrollFrame.buttons[i].isApplication then
                 self.buttons[i]:Hide()
             else
                 self.buttons[i]:Show()
