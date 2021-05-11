@@ -281,11 +281,13 @@ function LFClean:AnalyzeResults(results)
     local tot = #results
     for i, id in ipairs(results) do
         local details = C_LFGList.GetSearchResultInfo(id)
-        if
-            self.conf.profile.reportBL and
-                self.conf.profile.blacklist[details.leaderName]
-         then
-            self:Report(id)
+        if self.conf.profile.blacklist[details.leaderName] then
+            if self.conf.profile.reportBL then
+                self:Report(id)
+            elseif self.conf.profile.hideBL then
+                table.remove(results, i)
+                self:Print("Hidden group " .. details.name)
+            end
         end
     end
 end
