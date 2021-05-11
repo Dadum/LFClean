@@ -274,9 +274,8 @@ function LFClean:GenerateSelectedButton()
     end
 end
 
--- * Analyze the LFG search results, reporting all groups with a blacklisted
--- * leader (if the option is enabled). This seems to be limited to 100 groups,
--- * as it's the maximum size returned by C_LFGList.GetFilteredSearchResults().
+-- * Analyze the LFG search results, reporting/hiding all groups with a blacklisted
+-- * leader (if the option is enabled).
 function LFClean:AnalyzeResults(results)
     local tot = #results
     for i, id in ipairs(results) do
