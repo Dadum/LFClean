@@ -16,7 +16,7 @@ function LFClean:OnInitialize()
 
     self:InitConfig()
     self:InitDB()
-    self:SetUpdateHook()
+    self:SetupHooks()
 end
 
 -- * --------------------------------------------------------------------------
@@ -24,7 +24,7 @@ end
 -- * --------------------------------------------------------------------------
 
 -- * Hook the LFGList SearchPanel update function to generate buttons.
-function LFClean:SetUpdateHook()
+function LFClean:SetupHooks()
     hooksecurefunc(
         "LFGListSearchPanel_UpdateResults",
         function()
