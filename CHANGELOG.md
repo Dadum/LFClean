@@ -1,5 +1,6 @@
 ## v1.1.0-alpha1 (WIP)
-* Declare number of analyzed entries
+* Use hooks to launch the results analysis
+* Add (default) option to only hide groups when analyzing entries
 
 ### v1.1.0-alpha0
 * Add blacklist structure
