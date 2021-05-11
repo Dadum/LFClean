@@ -31,6 +31,12 @@ function LFClean:SetUpdateHook()
             self:GenerateButtons()
         end
     )
+    hooksecurefunc(
+        "LFGListUtil_SortSearchResults",
+        function(results)
+            self:AnalyzeResults(results)
+        end
+    )
 end
 
 -- * Add the given name to the blacklist
@@ -271,10 +277,9 @@ end
 -- * Analyze the LFG search results, reporting all groups with a blacklisted
 -- * leader (if the option is enabled). This seems to be limited to 100 groups,
 -- * as it's the maximum size returned by C_LFGList.GetFilteredSearchResults().
-function LFClean:AnalyzeResults()
-    local tot, results = C_LFGList.GetFilteredSearchResults()
-    local n = 0
-    for _, id in ipairs(results) do
+function LFClean:AnalyzeResults(results)
+    local tot = #results
+    for i, id in ipairs(results) do
         local details = C_LFGList.GetSearchResultInfo(id)
         if
             self.conf.profile.reportBL and
@@ -282,9 +287,7 @@ function LFClean:AnalyzeResults()
          then
             self:Report(id)
         end
-        n = n + 1
     end
-    self:Print("Done analyzing " .. n .. " of " .. tot .. " entries")
 end
 
 -- * Helper to generate both the entry buttons and the select button
