@@ -1,4 +1,4 @@
-## v1.1.0-alpha1 (WIP)
+## v1.1.0-alpha1
 * Use hooks to launch the results analysis
 * Add (default) option to only hide groups when analyzing entries
 
