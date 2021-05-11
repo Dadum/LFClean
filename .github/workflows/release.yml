@@ -28,7 +28,7 @@ jobs:
           release_name: ${{ github.event.repository.name }} ${{ github.ref }}
           body_path: "CHANGELOG.md"
           draft: false
-          prerelease: ${{ $env.IS_PRERELEASE }}
+          prerelease: ${{ env.IS_PRERELEASE }}
       - name: Create Release Asset
         run: git archive --format=zip -o LFClean.zip HEAD
       - name: Upload Release Asset
