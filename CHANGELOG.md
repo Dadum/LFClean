@@ -1,4 +1,7 @@
-## v1.1.0-alpha3
+## v1.1.0-alpha4
+* Improve robustness of blacklist auto-hiding at the cost of running the result analysis a ton more
+
+### v1.1.0-alpha3
 * Remove auto-reporting feature for blacklisted entries
 * Implement verbosity for blacklist messages
 * Improve config ordering
