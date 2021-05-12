@@ -94,52 +94,60 @@ local blacklistOptions = {
     },
     manageBlacklist = {
         name = "Manage Blacklist",
-        type = "select",
-        order = 50,
-        set = function(info, val)
-            LFClean.blmSelect = val
-        end,
-        get = function(info)
-            return LFClean.blmSelect
-        end,
-        values = function()
-            local blacklist = {}
-            for k, _ in pairs(LFClean.conf.profile.blacklist) do
-                blacklist[k] = k
-            end
-            return blacklist
-        end,
-        disabled = function()
-            if next(LFClean.conf.profile.blacklist, nil) then
-                return false
-            end
-            return true
-        end
-    },
-    deleteEntry = {
-        name = "Remove",
-        type = "execute",
-        order = 60,
-        func = function()
-            LFClean.conf.profile.blacklist[LFClean.blmSelect] = nil
-            LFClean.blmSelect = nil
-        end,
-        disabled = function()
-            if LFClean.blmSelect then
-                return false
-            end
-            return true
-        end
-    },
-    wipeBlacklist = {
-        name = "Clear Blacklist",
-        type = "execute",
-        order = 70,
-        confirm = true,
-        confirmText = "This will completely wipe the blacklist!",
-        func = function()
-            LFClean.conf.profile.blacklist = {}
-        end
+        order = 40,
+        type = "group",
+        inline = true,
+        args = {
+            blacklist = {
+                name = "Blacklist",
+                type = "select",
+                order = 10,
+                set = function(info, val)
+                    LFClean.blmSelect = val
+                end,
+                get = function(info)
+                    return LFClean.blmSelect
+                end,
+                values = function()
+                    local blacklist = {}
+                    for k, _ in pairs(LFClean.conf.profile.blacklist) do
+                        blacklist[k] = k
+                    end
+                    return blacklist
+                end,
+                disabled = function()
+                    if next(LFClean.conf.profile.blacklist, nil) then
+                        return false
+                    end
+                    return true
+                end
+            },
+            deleteEntry = {
+                name = "Remove",
+                type = "execute",
+                order = 20,
+                func = function()
+                    LFClean.conf.profile.blacklist[LFClean.blmSelect] = nil
+                    LFClean.blmSelect = nil
+                end,
+                disabled = function()
+                    if LFClean.blmSelect then
+                        return false
+                    end
+                    return true
+                end
+            },
+            wipeBlacklist = {
+                name = "Clear Blacklist",
+                type = "execute",
+                order = 30,
+                confirm = true,
+                confirmText = "This will completely wipe the blacklist!",
+                func = function()
+                    LFClean.conf.profile.blacklist = {}
+                end
+            }
+        }
     }
 }
 
