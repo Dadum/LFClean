@@ -1,6 +1,5 @@
-## v1.0.2 (WIP)
-* Fix laggy button refresh after reporing a group
-* Fix the memory usage exploding when scrolling through the group finder
+## v1.0.2
+* Fix laggy button visibility update
 * Add verbosity level option
 
 ### v1.0.1
