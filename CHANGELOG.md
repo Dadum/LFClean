@@ -1,5 +1,10 @@
-## v1.1.0-alpha2
-* Also manually hide blacklisted entrie, even if the report option is active
+## v1.1.0-alpha3
+* Remove auto-reporting feature for blacklisted entries
+* Implement verbosity for blacklist messages
+* Improve config ordering
+
+### v1.1.0-alpha2
+* Also manually hide blacklisted entries, even if the report option is active
 ### v1.1.0-alpha1
 * Use hooks to launch the results analysis
 * Add (default) option to only hide groups when analyzing entries
@@ -14,7 +19,7 @@
   * Wipe the blacklist clean
 * Show in the tooltip if the leader of an entry is already blacklisted
 
-## v1.0.2
+### v1.0.2
 * Fix laggy button visibility update
 * Add verbosity level option
 
