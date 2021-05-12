@@ -29,7 +29,12 @@ function LFClean:SetupHooks()
         "LFGListSearchPanel_UpdateResults",
         function(panel)
             self:GenerateButtons()
-            self:AnalyzeResults(panel.results)
+        end
+    )
+    hooksecurefunc(
+        "LFGListUtil_SortSearchResults",
+        function(results)
+            self:AnalyzeResults(results)
         end
     )
 end
@@ -287,13 +292,17 @@ function LFClean:AnalyzeResults(results)
     local hidden = 0
 
     -- Loop through the results in search of blacklisted leaders
-    for i, id in ipairs(results) do
-        local details = C_LFGList.GetSearchResultInfo(id)
+    local i = 1
+    while i <= #results do
+        local details = C_LFGList.GetSearchResultInfo(results[i])
         if self.conf.profile.blacklist[details.leaderName] then
-            table.remove(results, i)
             hidden = hidden + 1
+            table.remove(results, i)
+
             -- Declare hidden group details if verbosity is pedantic
             self:PrintV("Hidden group: " .. details.name, 2)
+        else
+            i = i + 1
         end
     end
 
