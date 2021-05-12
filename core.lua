@@ -284,15 +284,21 @@ end
 -- * Analyze the LFG search results, reporting/hiding all groups with a blacklisted
 -- * leader (if the option is enabled).
 function LFClean:AnalyzeResults(results)
+    local hidden = 0
+    local tot = #results
     for i, id in ipairs(results) do
         local details = C_LFGList.GetSearchResultInfo(id)
         if self.conf.profile.blacklist[details.leaderName] then
             if self.conf.profile.hideBL then
                 table.remove(results, i)
-                self:Print("Hidden group " .. details.name)
+                hidden = hidden + 1
+                -- Declare hidden group details if verbosity is pedantic
+                self:PrintV("Hidden group " .. details.name, 2)
             end
         end
     end
+    -- Declare amount of hidden groups if verbosity is verbose
+    self:PrintV("Hidden " .. hidden .. "/" .. tot .. " groups", 1)
 end
 
 -- * Helper to generate both the entry buttons and the select button
