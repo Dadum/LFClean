@@ -62,7 +62,6 @@ function LFClean:Report(id)
         self:PrintV("Reported group: " .. details.name, 1)
 
         LFGListSearchPanel_UpdateResultList(panel)
-        LFGListSearchPanel_UpdateResults(panel)
         self:GenerateButtons()
     else
         self:PrintV("No group selected", 0)
