@@ -33,6 +33,13 @@ function LFClean:SetUpdateHook()
     )
 end
 
+-- * Print fiunction considering verbosity
+function LFClean:PrintV(message, verbosity)
+    if self.conf.profile.verbosity >= verbosity then
+        self:Print(message)
+    end
+end
+
 -- * Report the group with the given id.
 function LFClean:Report(id)
     local panel = _G.LFGListFrame.SearchPanel
@@ -40,13 +47,13 @@ function LFClean:Report(id)
         local details = C_LFGList.GetSearchResultInfo(id)
 
         C_LFGList.ReportSearchResult(id, self.conf.profile.reportType)
-        self:Print("Reported group: " .. details.name)
+        self:PrintV("Reported group: " .. details.name, 1)
 
         LFGListSearchPanel_UpdateResultList(panel)
         LFGListSearchPanel_UpdateResults(panel)
         self:GenerateButtons()
     else
-        self:Print("No group selected")
+        self:PrintV("No group selected", 0)
     end
 end
 

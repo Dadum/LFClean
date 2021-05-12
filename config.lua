@@ -51,6 +51,19 @@ local options = {
                 ["lfglistcomment"] = "Description",
                 ["badplayername"] = "Leader Name"
             }
+        },
+        verbosity = {
+            name = "Verbosity",
+            desc = "Determine the level of verbosity of the addon messages",
+            type = select,
+            order = 3,
+            set = function(info, val)
+                LFClean.conf.profile.verbosity = val
+            end,
+            get = function(info)
+                return LFClean.conf.profile.verbosity
+            end,
+            values = {[0] = "Quiet", [1] = "Verbose", [2] = "Pedantic"}
         }
     }
 }
@@ -65,7 +78,8 @@ local defaults = {
         entryButtons = true,
         selectedButton = false,
         buttonsReport = true,
-        reportType = "lfglistspam"
+        reportType = "lfglistspam",
+        verbosity = 1
     }
 }
 
