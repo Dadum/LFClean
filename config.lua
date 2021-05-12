@@ -92,22 +92,6 @@ local blacklistOptions = {
             return LFClean.conf.profile.hideBL
         end
     },
-    autoReport = {
-        name = "Report Blacklisted Entries",
-        desc = "Automatically report any group from blacklisted leader when search results are loaded",
-        type = "toggle",
-        width = 1.5,
-        order = 40,
-        set = function(info, val)
-            LFClean.conf.profile.reportBL = val
-        end,
-        get = function(info)
-            return LFClean.conf.profile.reportBL
-        end,
-        disabled = function()
-            return not LFClean.conf.profile.hideBL
-        end
-    },
     manageBlacklist = {
         name = "Manage Blacklist",
         type = "select",
@@ -216,7 +200,6 @@ local defaults = {
         blacklist = {},
         autoBL = false,
         rightClickBL = true,
-        reportBL = false,
         hideBL = true,
         verbosity = 1
     }

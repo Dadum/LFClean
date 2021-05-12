@@ -289,11 +289,7 @@ function LFClean:AnalyzeResults(results)
         if self.conf.profile.blacklist[details.leaderName] then
             if self.conf.profile.hideBL then
                 table.remove(results, i)
-                if self.conf.profile.reportBL then
-                    self:Report(id)
-                else
-                    self:Print("Hidden group " .. details.name)
-                end
+                self:Print("Hidden group " .. details.name)
             end
         end
     end
