@@ -42,7 +42,7 @@ end
 -- * Add the given name to the blacklist
 function LFClean:BlacklistName(name)
     self.conf.profile.blacklist[name] = true
-    self:Print(name .. " blacklisted")
+    self:PrintV(name .. " blacklisted", 1)
 end
 
 -- * Print fiunction considering verbosity
@@ -293,7 +293,7 @@ function LFClean:AnalyzeResults(results)
                 table.remove(results, i)
                 hidden = hidden + 1
                 -- Declare hidden group details if verbosity is pedantic
-                self:PrintV("Hidden group " .. details.name, 2)
+                self:PrintV("Hidden group: " .. details.name, 2)
             end
         end
     end
