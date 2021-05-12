@@ -27,14 +27,9 @@ end
 function LFClean:SetupHooks()
     hooksecurefunc(
         "LFGListSearchPanel_UpdateResults",
-        function()
+        function(panel)
             self:GenerateButtons()
-        end
-    )
-    hooksecurefunc(
-        "LFGListUtil_SortSearchResults",
-        function(results)
-            self:AnalyzeResults(results)
+            self:AnalyzeResults(panel.results)
         end
     )
 end
@@ -283,21 +278,30 @@ end
 -- * Analyze the LFG search results, reporting/hiding all groups with a blacklisted
 -- * leader (if the option is enabled).
 function LFClean:AnalyzeResults(results)
+    -- Exit if there are no results or auto-hide is diabled
+    if #results == 0 or not self.conf.profile.hideBL then
+        return
+    end
+
+    -- Count how many entries were hidden
     local hidden = 0
-    local tot = #results
+
+    -- Loop through the results in search of blacklisted leaders
     for i, id in ipairs(results) do
         local details = C_LFGList.GetSearchResultInfo(id)
         if self.conf.profile.blacklist[details.leaderName] then
-            if self.conf.profile.hideBL then
-                table.remove(results, i)
-                hidden = hidden + 1
-                -- Declare hidden group details if verbosity is pedantic
-                self:PrintV("Hidden group: " .. details.name, 2)
-            end
+            table.remove(results, i)
+            hidden = hidden + 1
+            -- Declare hidden group details if verbosity is pedantic
+            self:PrintV("Hidden group: " .. details.name, 2)
         end
     end
-    -- Declare amount of hidden groups if verbosity is verbose
-    self:PrintV("Hidden " .. hidden .. "/" .. tot .. " groups", 1)
+
+    -- Declare amount of hidden groups if verbosity is verbose and some results
+    -- were hidden
+    if hidden > 0 then
+        self:PrintV("Hidden " .. hidden .. " groups", 1)
+    end
 end
 
 -- * Helper to generate both the entry buttons and the select button
