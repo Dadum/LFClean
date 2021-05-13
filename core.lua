@@ -292,7 +292,8 @@ function LFClean:AnalyzeResults(results)
     local hidden = 0
 
     -- Loop through the results in search of blacklisted leaders
-    for i = #results, 1, -1 do
+    local i = 1
+    while i <= #results do
         local details = C_LFGList.GetSearchResultInfo(results[i])
         if self.conf.profile.blacklist[details.leaderName] then
             hidden = hidden + 1
@@ -300,6 +301,8 @@ function LFClean:AnalyzeResults(results)
 
             -- Declare hidden group details if verbosity is pedantic
             self:PrintV("Hidden group: " .. details.name, 2)
+        else
+            i = i + 1
         end
     end
 
