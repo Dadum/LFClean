@@ -1,4 +1,7 @@
-## v1.1.0-alpha4
+## v1.1.0-alpha5
+* Add option to manually blacklist names
+
+### v1.1.0-alpha4
 * Fix blacklisted entries not being removed
   
 ### v1.1.0-alpha3

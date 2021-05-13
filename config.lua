@@ -100,6 +100,7 @@ local blacklistOptions = {
         args = {
             blacklist = {
                 name = "Blacklist",
+                desc = "Select a blacklist entry to remove",
                 type = "select",
                 order = 10,
                 set = function(info, val)
@@ -124,6 +125,7 @@ local blacklistOptions = {
             },
             deleteEntry = {
                 name = "Remove",
+                desc = "Remove the entry from the blacklist",
                 type = "execute",
                 order = 20,
                 func = function()
@@ -139,12 +141,40 @@ local blacklistOptions = {
             },
             wipeBlacklist = {
                 name = "Clear Blacklist",
+                desc = "Completely wipe the blacklist clean",
                 type = "execute",
                 order = 30,
                 confirm = true,
                 confirmText = "This will completely wipe the blacklist!",
                 func = function()
                     LFClean.conf.profile.blacklist = {}
+                end
+            },
+            nameInput = {
+                name = "Add to Blacklist",
+                desc = "Manually add a character name to the blacklist",
+                type = "input",
+                order = 40,
+                get = function(info)
+                    return LFClean.addBL
+                end,
+                set = function(info, val)
+                    LFClean.addBL = val
+                end
+            },
+            addToBL = {
+                name = "Add",
+                type = "execute",
+                order = 50,
+                func = function()
+                    LFClean.conf.profile.blacklist[LFClean.addBL] = true
+                    LFClean.addBL = nil
+                end,
+                disabled = function()
+                    if LFClean.addBL then
+                        return false
+                    end
+                    return true
                 end
             }
         }
