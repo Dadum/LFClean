@@ -1,6 +1,7 @@
 ## v1.1.0-alpha5
 * Add option to manually blacklist names
 * Update total results after hiding, allowing for the "create group" screen to popup if all the entries were hidden
+* Fix total hidden groups message being printed twice on refresh
 
 ### v1.1.0-alpha4
 * Fix blacklisted entries not being removed
