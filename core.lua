@@ -303,10 +303,12 @@ function LFClean:AnalyzeResults(results)
         end
     end
 
-    -- Declare amount of hidden groups if verbosity is verbose and some results
-    -- were hidden
     if hidden > 0 then
+        -- Declare amount of hidden groups if verbosity is verbose
         self:PrintV("Hidden " .. hidden .. " groups", 1)
+        -- Update the total results
+        _G.LFGListFrame.SearchPanel.totalResults =
+            _G.LFGListFrame.SearchPanel.totalResults - hidden
     end
 end
 
