@@ -68,7 +68,7 @@ local blacklistOptions = {
     },
     rightClickBlacklists = {
         name = "Right Click Blacklists",
-        desc = "Right clicking a report shortcuts adds the leader of the group to the blacklist",
+        desc = "Right clicking a report shortcut adds the leader to the blacklist",
         type = "toggle",
         width = 1.5,
         order = 20,
