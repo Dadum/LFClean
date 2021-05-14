@@ -2,7 +2,8 @@ LFClean =
     LibStub("AceAddon-3.0"):NewAddon(
     "LFClean",
     "AceConsole-3.0",
-    "AceEvent-3.0"
+    "AceEvent-3.0",
+    "AceTimer-3.0"
 )
 GUI = LibStub("AceGUI-3.0")
 
@@ -35,6 +36,15 @@ function LFClean:SetupHooks()
         "LFGListUtil_SortSearchResults",
         function(results)
             self:AnalyzeResults(results)
+        end
+    )
+    _G.LFGListFrame.SearchPanel:HookScript(
+        "OnShow",
+        function(panel)
+            -- Launch the blacklist analysis with a delay. This seems to be
+            -- necessary as results are loading for the first time, and group
+            -- leaders names are not yet available
+            self:ScheduleTimer("DelayedAnalysis", 1, panel)
         end
     )
 end
@@ -280,9 +290,15 @@ function LFClean:GenerateSelectedButton()
     end
 end
 
+-- * Launch the analysis with a delay.
+function LFClean:DelayedAnalysis(panel)
+    self:AnalyzeResults(panel.results, true --[[forcePrint]])
+    LFGListSearchPanel_UpdateResults(panel)
+end
+
 -- * Analyze the LFG search results, reporting/hiding all groups with a blacklisted
 -- * leader (if the option is enabled).
-function LFClean:AnalyzeResults(results)
+function LFClean:AnalyzeResults(results, forcePrint)
     -- Exit if there are no results or auto-hide is diabled
     if #results == 0 or not self.conf.profile.hideBL then
         return
@@ -299,7 +315,7 @@ function LFClean:AnalyzeResults(results)
             hidden = hidden + 1
             table.remove(results, i)
 
-            if self.printHidden then
+            if forcePrint or self.printHidden then
                 -- Declare hidden group details if verbosity is pedantic
                 self:PrintV("Hidden group: " .. details.name, 2)
             end
@@ -309,7 +325,7 @@ function LFClean:AnalyzeResults(results)
     end
 
     if hidden > 0 then
-        if self.printHidden then
+        if forcePrint or self.printHidden then
             -- Declare amount of hidden groups if verbosity is verbose
             self:PrintV("Hidden " .. hidden .. " groups", 1)
         end
