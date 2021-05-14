@@ -6,6 +6,7 @@
   * Option to remove single names from the blacklist or completely wipe it clean
   * Automatically hide any LFG entry by a blacklisted character
   * Shortcuts tooltips show wheter the group leader is blacklisted
+* Improved options layout
 
 ### v1.0.2
 * Fix laggy button visibility update
