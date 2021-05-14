@@ -10,3 +10,4 @@ Add shortcuts to quickly hide and report advertisement/offensive listings in the
 * Add a button to report the currently selected group
 * Add a button on each entry to quickly report that group
 * Choose the default behavior of the report shortcuts
+* Blacklist and automatically hide entries from unwanted characters 
