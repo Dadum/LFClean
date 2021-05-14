@@ -1,4 +1,14 @@
-## v1.0.2
+
+## v1.1.0
+* Blacklist!
+  * Add names to the blacklist by right-clicking a shortcut button or automatically blacklist on report
+  * Option to manually add names to the blacklist
+  * Option to remove single names from the blacklist or completely wipe it clean
+  * Automatically hide any LFG entry by a blacklisted character
+  * Shortcuts tooltips show wheter the group leader is blacklisted
+* Improved options layout
+
+### v1.0.2
 * Fix laggy button visibility update
 * Add verbosity level option
 

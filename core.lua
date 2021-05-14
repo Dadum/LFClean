@@ -2,7 +2,8 @@ LFClean =
     LibStub("AceAddon-3.0"):NewAddon(
     "LFClean",
     "AceConsole-3.0",
-    "AceEvent-3.0"
+    "AceEvent-3.0",
+    "AceTimer-3.0"
 )
 GUI = LibStub("AceGUI-3.0")
 
@@ -16,7 +17,7 @@ function LFClean:OnInitialize()
 
     self:InitConfig()
     self:InitDB()
-    self:SetUpdateHook()
+    self:SetupHooks()
 end
 
 -- * --------------------------------------------------------------------------
@@ -24,13 +25,34 @@ end
 -- * --------------------------------------------------------------------------
 
 -- * Hook the LFGList SearchPanel update function to generate buttons.
-function LFClean:SetUpdateHook()
+function LFClean:SetupHooks()
     hooksecurefunc(
         "LFGListSearchPanel_UpdateResults",
-        function()
+        function(panel)
             self:GenerateButtons()
         end
     )
+    hooksecurefunc(
+        "LFGListUtil_SortSearchResults",
+        function(results)
+            self:AnalyzeResults(results)
+        end
+    )
+    _G.LFGListFrame.SearchPanel:HookScript(
+        "OnShow",
+        function(panel)
+            -- Launch the blacklist analysis with a delay. This seems to be
+            -- necessary as results are loading for the first time, and group
+            -- leaders names are not yet available
+            self:ScheduleTimer("DelayedAnalysis", 1, panel)
+        end
+    )
+end
+
+-- * Add the given name to the blacklist
+function LFClean:BlacklistName(name)
+    self.conf.profile.blacklist[name] = true
+    self:PrintV(name .. " blacklisted", 1)
 end
 
 -- * Print fiunction considering verbosity
@@ -50,7 +72,6 @@ function LFClean:Report(id)
         self:PrintV("Reported group: " .. details.name, 1)
 
         LFGListSearchPanel_UpdateResultList(panel)
-        LFGListSearchPanel_UpdateResults(panel)
         self:GenerateButtons()
     else
         self:PrintV("No group selected", 0)
@@ -86,6 +107,15 @@ function LFClean:GenerateReportTooltip(id)
         1 --[[wrapText]],
         true
     )
+    GameTooltip:AddLine(
+        "Blacklisted: " ..
+            (self.conf.profile.blacklist[details.leaderName] and "yes" or "no"),
+        1,
+        1,
+        1 --[[wrapText]],
+        true
+    )
+
     GameTooltip:Show()
 end
 
@@ -112,8 +142,24 @@ function LFClean:GenerateEntryButtons()
                 )
                 self.buttons[i]:SetScript(
                     "OnClick",
-                    function(self)
-                        LFClean:Report(self:GetParent().resultID)
+                    function(self, arg1)
+                        local id = self:GetParent().resultID
+                        if arg1 == "LeftButton" then
+                            LFClean:Report(id)
+                            -- Add leader to the blacklist if option is enabled
+                            if LFClean.conf.profile.reportBL then
+                                local details =
+                                    C_LFGList.GetSearchResultInfo(id)
+                                LFClean:BlacklistName(details.leaderName)
+                            end
+                        elseif
+                            arg1 == "RightButton" and
+                                LFClean.conf.profile.rightClickBL
+                         then
+                            -- Add leader to the blacklist if option is enabled
+                            local details = C_LFGList.GetSearchResultInfo(id)
+                            LFClean:BlacklistName(details.leaderName)
+                        end
                     end
                 )
                 self.buttons[i]:SetScript(
@@ -192,10 +238,25 @@ function LFClean:GenerateSelectedButton()
             )
             self.selectedButton:SetScript(
                 "OnClick",
-                function()
-                    -- Report currently selected entry
+                function(self, arg1)
                     local id = panel.selectedResult
-                    LFClean:Report(id)
+
+                    if arg1 == "LeftButton" then
+                        -- Report currently selected entry
+                        LFClean:Report(id)
+                        -- Add leader to the blacklist if option is enabled
+                        if LFClean.conf.profile.reportBL then
+                            local details = C_LFGList.GetSearchResultInfo(id)
+                            LFClean:BlacklistName(details.leaderName)
+                        end
+                    elseif
+                        arg1 == "RightButton" and
+                            LFClean.conf.profile.rightClickBL
+                     then
+                        -- Blacklist leader of currently selected entry-- Add leader to the blacklist if option is enabled
+                        local details = C_LFGList.GetSearchResultInfo(id)
+                        LFClean:BlacklistName(details.leaderName)
+                    end
 
                     -- Remove selection
                     panel.selectedResult = nil
@@ -226,6 +287,53 @@ function LFClean:GenerateSelectedButton()
         if (self.selectedButton) then
             self.selectedButton:Hide()
         end
+    end
+end
+
+-- * Launch the analysis with a delay.
+function LFClean:DelayedAnalysis(panel)
+    self:AnalyzeResults(panel.results, true --[[forcePrint]])
+    LFGListSearchPanel_UpdateResults(panel)
+end
+
+-- * Analyze the LFG search results, reporting/hiding all groups with a blacklisted
+-- * leader (if the option is enabled).
+function LFClean:AnalyzeResults(results, forcePrint)
+    -- Exit if there are no results or auto-hide is diabled
+    if #results == 0 or not self.conf.profile.hideBL then
+        return
+    end
+
+    -- Count how many entries were hidden
+    local hidden = 0
+
+    -- Loop through the results in search of blacklisted leaders
+    local i = 1
+    while i <= #results do
+        local details = C_LFGList.GetSearchResultInfo(results[i])
+        if self.conf.profile.blacklist[details.leaderName] then
+            hidden = hidden + 1
+            table.remove(results, i)
+
+            if forcePrint or self.printHidden then
+                -- Declare hidden group details if verbosity is pedantic
+                self:PrintV("Hidden group: " .. details.name, 2)
+            end
+        else
+            i = i + 1
+        end
+    end
+
+    if hidden > 0 then
+        if forcePrint or self.printHidden then
+            -- Declare amount of hidden groups if verbosity is verbose
+            self:PrintV("Hidden " .. hidden .. " groups", 1)
+        end
+        -- Toggle or init print toggle
+        self.printHidden = self.printHidden == nil or not self.printHidden
+        -- Update the total results
+        _G.LFGListFrame.SearchPanel.totalResults =
+            _G.LFGListFrame.SearchPanel.totalResults - hidden
     end
 end
 
