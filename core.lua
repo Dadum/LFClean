@@ -299,8 +299,10 @@ function LFClean:AnalyzeResults(results)
             hidden = hidden + 1
             table.remove(results, i)
 
-            -- Declare hidden group details if verbosity is pedantic
-            self:PrintV("Hidden group: " .. details.name, 2)
+            if self.printHidden then
+                -- Declare hidden group details if verbosity is pedantic
+                self:PrintV("Hidden group: " .. details.name, 2)
+            end
         else
             i = i + 1
         end
