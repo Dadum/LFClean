@@ -1,31 +1,11 @@
-## v1.1.0-alpha5
-* Add option to manually blacklist names
-* Update total results after hiding, allowing for the "create group" screen to popup if all the entries were hidden
-* Fix total hidden groups message being printed twice on refresh
 
-### v1.1.0-alpha4
-* Fix blacklisted entries not being removed
-  
-### v1.1.0-alpha3
-* Remove auto-reporting feature for blacklisted entries
-* Implement verbosity for blacklist messages
-* Improve config ordering
-
-### v1.1.0-alpha2
-* Also manually hide blacklisted entries, even if the report option is active
-### v1.1.0-alpha1
-* Use hooks to launch the results analysis
-* Add (default) option to only hide groups when analyzing entries
-
-### v1.1.0-alpha0
-* Add blacklist structure
-* Add option to automatically blacklist leaders on report
-* Add option blacklist leader by right-clicking shortcut buttons
-* Add option to automatically report all entries from blacklisted leaders when loading LFG results
-* Add blacklist management options:
-  * Remove single names from the blacklist
-  * Wipe the blacklist clean
-* Show in the tooltip if the leader of an entry is already blacklisted
+## v1.1.0
+* Blacklist!
+  * Add names to the blacklist by right-clicking a shortcut button or automatically blacklist on report
+  * Option to manually add names to the blacklist
+  * Option to remove single names from the blacklist or completely wipe it clean
+  * Automatically hide any LFG entry by a blacklisted character
+  * Shortcuts tooltips show wheter the group leader is blacklisted
 
 ### v1.0.2
 * Fix laggy button visibility update
