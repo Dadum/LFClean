@@ -81,7 +81,7 @@ local blacklistOptions = {
     },
     autoHide = {
         name = "Hide Blacklisted Entries",
-        desc = "Automatically hide any group from blacklisted leader when search results are loaded",
+        desc = "Automatically hide any group from a blacklisted leader",
         type = "toggle",
         width = 1.5,
         order = 30,
