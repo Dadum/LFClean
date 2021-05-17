@@ -1,5 +1,8 @@
 
-## v1.1.0
+## v1.1.0-beta0
+* Fix broken `Entry Buttons` config toggle
+
+### v1.1.0
 * Blacklist!
   * Add names to the blacklist by right-clicking a shortcut button or automatically blacklist on report
   * Option to manually add names to the blacklist
