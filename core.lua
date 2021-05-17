@@ -203,7 +203,7 @@ function LFClean:GenerateEntryButtons()
         end
     else
         for i = 1, #self.buttons do
-            self.buttons[i] = nil
+            self.buttons[i]:Hide()
             -- Reset DataDisplay to original anchor
             panel.ScrollFrame.buttons[i].DataDisplay:ClearAllPoints()
             panel.ScrollFrame.buttons[i].DataDisplay:SetPoint(
