@@ -8,6 +8,11 @@ LFClean =
 GUI = LibStub("AceGUI-3.0")
 
 -- * --------------------------------------------------------------------------
+-- * Locals
+-- * --------------------------------------------------------------------------
+local panel = _G.LFGListFrame.SearchPanel
+
+-- * --------------------------------------------------------------------------
 -- * Init
 -- * --------------------------------------------------------------------------
 
@@ -119,57 +124,62 @@ function LFClean:GenerateReportTooltip(id)
     GameTooltip:Show()
 end
 
+function LFClean:GenerateButton(parent, name)
+    local button = CreateFrame("Button", name, parent, "LFClean_ReportButton")
+    if name == "selectedButton" then
+        button:SetPoint("RIGHT", panel.RefreshButton, "LEFT", -5, 0)
+    else
+        button:SetPoint("RIGHT", parent, "RIGHT", -1, -1)
+    end
+    button:SetScript(
+        "OnClick",
+        function(self, arg1)
+            if arg1 == "LeftButton" then
+                -- Take the selected result id if the selectedButton is clicked,
+                -- or the parent's id otherwise
+                if self:GetName() == "selectedButton" then
+                    LFClean:Report(panel.selectedResult)
+                else
+                    LFClean:Report(self:GetParent().resultID)
+                end
+                -- Add leader to the blacklist if option is enabled
+                if LFClean.conf.profile.reportBL then
+                    local details = C_LFGList.GetSearchResultInfo(id)
+                    LFClean:BlacklistName(details.leaderName)
+                end
+            elseif arg1 == "RightButton" and LFClean.conf.profile.rightClickBL then
+                -- Add leader to the blacklist if option is enabled
+                local details = C_LFGList.GetSearchResultInfo(id)
+                LFClean:BlacklistName(details.leaderName)
+            end
+        end
+    )
+    button:SetScript(
+        "OnEnter",
+        function(self)
+            GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+            if self:GetName() == "selectedButton" then
+                LFClean:GenerateReportTooltip(panel.selectedResult)
+            else
+                LFClean:GenerateReportTooltip(self:GetParent().resultID)
+            end
+        end
+    )
+    button:SetScript("OnLeave", GameTooltip_Hide)
+    return button
+end
+
 -- * Generate report button for each entry in the LFG list
 function LFClean:GenerateEntryButtons()
-    local panel = _G.LFGListFrame.SearchPanel
     if (self.conf.profile.entryButtons) then
         for i = 1, #panel.ScrollFrame.buttons do
             -- Only generate a button if it is missing
             if self.buttons[i] == nil then
                 self.buttons[i] =
-                    CreateFrame(
-                    "Button",
-                    "entryButton" .. i,
+                    self:GenerateButton(
                     panel.ScrollFrame.buttons[i],
-                    "LFClean_ReportButton"
+                    "btn" .. i
                 )
-                self.buttons[i]:SetPoint(
-                    "RIGHT",
-                    panel.ScrollFrame.buttons[i],
-                    "RIGHT",
-                    -1,
-                    -1
-                )
-                self.buttons[i]:SetScript(
-                    "OnClick",
-                    function(self, arg1)
-                        local id = self:GetParent().resultID
-                        if arg1 == "LeftButton" then
-                            LFClean:Report(id)
-                            -- Add leader to the blacklist if option is enabled
-                            if LFClean.conf.profile.reportBL then
-                                local details =
-                                    C_LFGList.GetSearchResultInfo(id)
-                                LFClean:BlacklistName(details.leaderName)
-                            end
-                        elseif
-                            arg1 == "RightButton" and
-                                LFClean.conf.profile.rightClickBL
-                         then
-                            -- Add leader to the blacklist if option is enabled
-                            local details = C_LFGList.GetSearchResultInfo(id)
-                            LFClean:BlacklistName(details.leaderName)
-                        end
-                    end
-                )
-                self.buttons[i]:SetScript(
-                    "OnEnter",
-                    function(self)
-                        GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-                        LFClean:GenerateReportTooltip(self:GetParent().resultID)
-                    end
-                )
-                self.buttons[i]:SetScript("OnLeave", GameTooltip_Hide)
             end
 
             -- Hide the button if currently queued for the group
@@ -222,58 +232,7 @@ function LFClean:GenerateSelectedButton()
     if (self.conf.profile.selectedButton) then
         local panel = _G.LFGListFrame.SearchPanel
         if (self.selectedButton == nil) then
-            self.selectedButton =
-                CreateFrame(
-                "Button",
-                "selectedButton",
-                _G.LFGListFrame.SearchPanel,
-                "LFClean_ReportButton"
-            )
-            self.selectedButton:SetPoint(
-                "RIGHT",
-                _G.LFGListFrame.SearchPanel.RefreshButton,
-                "LEFT",
-                -5,
-                0
-            )
-            self.selectedButton:SetScript(
-                "OnClick",
-                function(self, arg1)
-                    local id = panel.selectedResult
-
-                    if arg1 == "LeftButton" then
-                        -- Report currently selected entry
-                        LFClean:Report(id)
-                        -- Add leader to the blacklist if option is enabled
-                        if LFClean.conf.profile.reportBL then
-                            local details = C_LFGList.GetSearchResultInfo(id)
-                            LFClean:BlacklistName(details.leaderName)
-                        end
-                    elseif
-                        arg1 == "RightButton" and
-                            LFClean.conf.profile.rightClickBL
-                     then
-                        -- Blacklist leader of currently selected entry-- Add leader to the blacklist if option is enabled
-                        local details = C_LFGList.GetSearchResultInfo(id)
-                        LFClean:BlacklistName(details.leaderName)
-                    end
-
-                    -- Remove selection
-                    panel.selectedResult = nil
-                end
-            )
-            self.selectedButton:SetScript(
-                "OnEnter",
-                function(self)
-                    GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-                    if (panel.selectedResult) then
-                        LFClean:GenerateReportTooltip(panel.selectedResult)
-                    else
-                        GameTooltip:SetText("Select a group to report")
-                    end
-                end
-            )
-            self.selectedButton:SetScript("OnLeave", GameTooltip_Hide)
+            self.selectedButton = self:GenerateButton(panel, "selectedButton")
         end
 
         -- Disable selected button if no entry is selected
