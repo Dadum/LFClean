@@ -134,14 +134,16 @@ function LFClean:GenerateButton(parent, name)
     button:SetScript(
         "OnClick",
         function(self, arg1)
+            local id
+            -- Take the selected result id if the selectedButton is clicked,
+            -- or the parent's id otherwise
+            if self:GetName() == "selectedButton" then
+                id = panel.selectedResult
+            else
+                id = self:GetParent().resultID
+            end
             if arg1 == "LeftButton" then
-                -- Take the selected result id if the selectedButton is clicked,
-                -- or the parent's id otherwise
-                if self:GetName() == "selectedButton" then
-                    LFClean:Report(panel.selectedResult)
-                else
-                    LFClean:Report(self:GetParent().resultID)
-                end
+                LFClean:Report(id)
                 -- Add leader to the blacklist if option is enabled
                 if LFClean.conf.profile.reportBL then
                     local details = C_LFGList.GetSearchResultInfo(id)
