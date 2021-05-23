@@ -3,6 +3,20 @@ local C = LibStub("AceConfig-3.0")
 local CD = LibStub("AceConfigDialog-3.0")
 local DB = LibStub("AceDB-3.0")
 
+local defaults = {
+    profile = {
+        entryButtons = true,
+        selectedButton = false,
+        buttonsReport = true,
+        reportType = "lfglistspam",
+        blacklist = {},
+        autoBL = false,
+        rightClickBL = true,
+        hideBL = true,
+        verbosity = 1
+    }
+}
+
 local shortcutsOptions = {
     entryButtons = {
         name = "Entry Buttons",
@@ -186,7 +200,7 @@ local otherOptions = {
         name = "Verbosity",
         desc = "Determine the level of verbosity of the addon messages",
         type = "select",
-        order = 3,
+        order = 10,
         set = function(info, val)
             LFClean.conf.profile.verbosity = val
         end,
@@ -194,6 +208,17 @@ local otherOptions = {
             return LFClean.conf.profile.verbosity
         end,
         values = {[0] = "Quiet", [1] = "Verbose", [2] = "Pedantic"}
+    },
+    restoreDefaults = {
+        name = "Restore Defaults",
+        desc = "Restore the default options.\nNOTE: This also resets the blacklist!",
+        type = "execute",
+        order = 20,
+        confirm = true,
+        confirmText = "This will reset all the addon options and also wipe the blacklist.\nAre you sure?",
+        func = function()
+            LFClean.conf.profile = defaults.profile
+        end
     }
 }
 
@@ -228,20 +253,6 @@ function LFClean:InitConfig()
     C:RegisterOptionsTable("LFClean", options, nil)
     CD:AddToBlizOptions("LFClean", "LFClean")
 end
-
-local defaults = {
-    profile = {
-        entryButtons = true,
-        selectedButton = false,
-        buttonsReport = true,
-        reportType = "lfglistspam",
-        blacklist = {},
-        autoBL = false,
-        rightClickBL = true,
-        hideBL = true,
-        verbosity = 1
-    }
-}
 
 function LFClean:InitDB()
     self.conf = DB:New("LFCleanConf", defaults, true)
