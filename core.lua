@@ -43,7 +43,7 @@ function LFClean:SetupHooks()
             self:AnalyzeResults(results)
         end
     )
-    _G.LFGListFrame.SearchPanel:HookScript(
+    panel:HookScript(
         "OnShow",
         function(panel)
             -- Launch the blacklist analysis with a delay. This seems to be
@@ -291,8 +291,7 @@ function LFClean:AnalyzeResults(results, forcePrint)
         -- Toggle or init print toggle
         self.printHidden = self.printHidden == nil or not self.printHidden
         -- Update the total results
-        _G.LFGListFrame.SearchPanel.totalResults =
-            _G.LFGListFrame.SearchPanel.totalResults - hidden
+        panel.totalResults = panel.totalResults - hidden
     end
 end
 
