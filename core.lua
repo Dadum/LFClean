@@ -69,7 +69,6 @@ end
 
 -- * Report the group with the given id.
 function LFClean:Report(id)
-    local panel = _G.LFGListFrame.SearchPanel
     if id then
         local details = C_LFGList.GetSearchResultInfo(id)
 
@@ -232,7 +231,6 @@ end
 -- * Generate button to report the selected group
 function LFClean:GenerateSelectedButton()
     if (self.conf.profile.selectedButton) then
-        local panel = _G.LFGListFrame.SearchPanel
         if (self.selectedButton == nil) then
             self.selectedButton = self:GenerateButton(panel, "selectedButton")
         end
