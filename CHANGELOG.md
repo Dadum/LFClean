@@ -1,5 +1,5 @@
 
-## v1.1.0-beta0
+## v1.1.1
 * Fix broken `Entry Buttons` config toggle
 * Add restore defaults config button 
 * Internal refactors
