@@ -1,6 +1,8 @@
 
 ## v1.1.0-beta0
 * Fix broken `Entry Buttons` config toggle
+* Add restore defaults config button 
+* Internal refactors
 
 ### v1.1.0
 * Blacklist!
