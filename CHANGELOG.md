@@ -1,5 +1,8 @@
 
-## v1.1.1
+## v1.1.2
+* Bump interface version to patch 9.1
+
+### v1.1.1
 * Fix broken `Entry Buttons` config toggle
 * Add restore defaults config button 
 * Internal refactors
