@@ -1,5 +1,7 @@
+## v1.1.2
+* Fix right-click blacklisting not hiding the entry right away
 
-## v1.1.1
+### v1.1.1
 * Fix broken `Entry Buttons` config toggle
 * Add restore defaults config button 
 * Internal refactors

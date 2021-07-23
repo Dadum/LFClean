@@ -152,6 +152,7 @@ function LFClean:GenerateButton(parent, name)
                 -- Add leader to the blacklist if option is enabled
                 local details = C_LFGList.GetSearchResultInfo(id)
                 LFClean:BlacklistName(details.leaderName)
+                LFClean:HideEntryWithID(id)
             end
         end
     )
@@ -253,6 +254,17 @@ end
 function LFClean:DelayedAnalysis(panel)
     self:AnalyzeResults(panel.results, true --[[forcePrint]])
     LFGListSearchPanel_UpdateResults(panel)
+end
+
+function LFClean:HideEntryWithID(id)
+    local results = panel.results
+    for i = 1, #results do
+        if results[i] == id then
+            table.remove(results, i)
+            LFGListSearchPanel_UpdateResults(panel)
+            return
+        end
+    end
 end
 
 -- * Analyze the LFG search results, reporting/hiding all groups with a blacklisted
