@@ -1,5 +1,8 @@
-## v1.1.2
+## v1.1.3
 * Fix right-click blacklisting not hiding the entry right away
+
+### v1.1.2
+* Bump interface version to patch 9.1
 
 ### v1.1.1
 * Fix broken `Entry Buttons` config toggle
