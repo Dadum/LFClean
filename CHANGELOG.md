@@ -1,4 +1,7 @@
-## v1.1.3
+## v1.1.4
+* Bump toc interface version to 9.1.5
+
+### v1.1.3
 * Fix right-click blacklisting not hiding the entry right away
 
 ### v1.1.2
